@@ -27,10 +27,9 @@ public class MainActivity extends Activity {
 	public void onBackPressed() {
 
 		Context context = getApplicationContext();
-		CharSequence text = "No escape!";
 		int duration = Toast.LENGTH_LONG;
 
-		Toast toast = Toast.makeText(context, text, duration);
+		Toast toast = Toast.makeText(context, R.string.onBackPressedToast, duration);
 		toast.show();
 	}
 }
