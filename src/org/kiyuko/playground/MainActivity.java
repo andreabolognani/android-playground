@@ -2,7 +2,11 @@ package org.kiyuko.playground;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.view.Menu;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -19,4 +23,14 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public void onBackPressed() {
+
+		Context context = getApplicationContext();
+		CharSequence text = "No escape!";
+		int duration = Toast.LENGTH_LONG;
+
+		Toast toast = Toast.makeText(context, text, duration);
+		toast.show();
+	}
 }
