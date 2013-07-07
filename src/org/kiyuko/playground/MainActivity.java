@@ -14,6 +14,7 @@ public class MainActivity extends Activity {
 
 	private ArrayList<Item> items;
 	private ArrayAdapter<Item> adapter;
+	private ListView listView1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class MainActivity extends Activity {
 
 		adapter = new ArrayAdapter<Item>(this,android.R.layout.simple_list_item_1, items);
 
-		ListView listView1 = (ListView) findViewById(R.id.listView1);
+		listView1 = (ListView) findViewById(R.id.listView1);
 		listView1.setAdapter(adapter);
 	}
 
@@ -52,6 +53,9 @@ public class MainActivity extends Activity {
 
 				items.add(new Item(Integer.valueOf(items.size() + 1).toString()));
 				adapter.notifyDataSetChanged();
+
+				// Scroll to the bottom of the ListView
+				listView1.setSelection(listView1.getCount() - 1);
 
 				return true;
 
