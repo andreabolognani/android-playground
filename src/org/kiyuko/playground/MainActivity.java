@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -38,12 +39,25 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	public void onBackPressed() {
+	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-		Context context = getApplicationContext();
-		int duration = Toast.LENGTH_LONG;
+		Toast toast;
+		int duration;
 
-		Toast toast = Toast.makeText(context, R.string.onBackPressedToast, duration);
-		toast.show();
+		duration = Toast.LENGTH_SHORT;
+
+		switch (menuItem.getItemId()) {
+
+			case R.id.action_add:
+			case R.id.action_settings:
+
+				toast = Toast.makeText(getApplicationContext(), R.string.notImplemented, duration);
+				toast.show();
+
+				return true;
+
+			default:
+				return super.onOptionsItemSelected(menuItem);
+		}
 	}
 }
