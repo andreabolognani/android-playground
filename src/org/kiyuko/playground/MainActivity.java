@@ -42,11 +42,6 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-		Toast toast;
-		int duration;
-
-		duration = Toast.LENGTH_SHORT;
-
 		switch (menuItem.getItemId()) {
 
 			case R.id.action_add:
@@ -61,13 +56,23 @@ public class MainActivity extends Activity {
 
 			case R.id.action_settings:
 
-				toast = Toast.makeText(getApplicationContext(), R.string.notImplemented, duration);
-				toast.show();
+				notImplemented();
 
 				return true;
 
 			default:
 				return super.onOptionsItemSelected(menuItem);
 		}
+	}
+
+	private void notImplemented() {
+
+		Toast toast;
+		int duration;
+
+		duration = Toast.LENGTH_SHORT;
+
+		toast = Toast.makeText(getApplicationContext(), R.string.notImplemented, duration);
+		toast.show();
 	}
 }
