@@ -1,5 +1,7 @@
 package org.kiyuko.playground;
 
+import java.util.ArrayList;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Context;
@@ -10,18 +12,19 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-	private String[] listItems = {
-			"Item one",
-			"Item two",
-			"Item three"
-	};
+	private ArrayList<Item> items;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, listItems);
+		items = new ArrayList<Item>();
+		items.add(new Item("1"));
+		items.add(new Item("2"));
+		items.add(new Item("3"));
+
+		ArrayAdapter<Item> adapter = new ArrayAdapter<Item>(this,android.R.layout.simple_list_item_1, items);
 
 		ListView listView1 = (ListView) findViewById(R.id.listView1);
 		listView1.setAdapter(adapter);
