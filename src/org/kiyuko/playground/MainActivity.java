@@ -3,23 +3,25 @@ package org.kiyuko.playground;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.app.Activity;
+import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends ListActivity {
 
+	private ListView listView;
 	private ArrayList<Item> items;
 	private ArrayAdapter<Item> adapter;
-	private ListView listView1;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		listView = getListView();
 
 		items = new ArrayList<Item>();
 		items.add(new Item("1"));
@@ -27,9 +29,7 @@ public class MainActivity extends Activity {
 		items.add(new Item("3"));
 
 		adapter = new ArrayAdapter<Item>(this,android.R.layout.simple_list_item_1, items);
-
-		listView1 = (ListView) findViewById(R.id.listView1);
-		listView1.setAdapter(adapter);
+		setListAdapter(adapter);
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 				adapter.notifyDataSetChanged();
 
 				// Scroll to the bottom of the ListView
-				listView1.setSelection(listView1.getCount() - 1);
+				listView.setSelection(listView.getCount() - 1);
 
 				return true;
 
