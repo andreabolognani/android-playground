@@ -50,7 +50,7 @@ public class MainActivity extends Activity {
 
 			case R.id.action_add:
 
-				items.add(new Item("x"));
+				items.add(new Item(Integer.valueOf(items.size() + 1).toString()));
 				adapter.notifyDataSetChanged();
 
 				return true;
