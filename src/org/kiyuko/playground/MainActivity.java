@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -63,6 +64,12 @@ public class MainActivity extends ListActivity {
 			default:
 				return super.onOptionsItemSelected(menuItem);
 		}
+	}
+
+	@Override
+	public void onListItemClick(ListView listView, View view, int position, long id) {
+
+		notImplemented();
 	}
 
 	private void notImplemented() {
