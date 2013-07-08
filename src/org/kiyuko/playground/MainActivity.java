@@ -25,9 +25,9 @@ public class MainActivity extends ListActivity {
 		listView = getListView();
 
 		items = new ArrayList<Item>();
-		items.add(new Item("1"));
-		items.add(new Item("2"));
-		items.add(new Item("3"));
+		items.add(new Item("1", "..."));
+		items.add(new Item("2", "..."));
+		items.add(new Item("3", "..."));
 
 		adapter = new ArrayAdapter<Item>(this,android.R.layout.simple_list_item_1, items);
 		setListAdapter(adapter);
@@ -47,7 +47,7 @@ public class MainActivity extends ListActivity {
 
 			case R.id.action_add:
 
-				items.add(new Item(Integer.valueOf(items.size() + 1).toString()));
+				items.add(new Item(Integer.valueOf(items.size() + 1).toString(), "..."));
 				adapter.notifyDataSetChanged();
 
 				// Scroll to the bottom of the ListView
