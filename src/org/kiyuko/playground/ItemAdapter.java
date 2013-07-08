@@ -12,25 +12,39 @@ import android.widget.TextView;
 public class ItemAdapter extends ArrayAdapter<Item> {
 
 	public ItemAdapter(Context context, ArrayList<Item> objects) {
-		super(context, android.R.layout.simple_list_item_1, objects);
+		super(context, R.layout.item, objects);
 	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 
 		View view;
+		TextView nameView;
+		TextView descriptionView;
+		LayoutInflater inflater;
+		Item item;
 
 		view = convertView;
+		item = getItem(position);
 
 		if (view == null) {
-			LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = inflater.inflate(android.R.layout.simple_list_item_1, null);
+
+			inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			view = inflater.inflate(R.layout.item, null);
 		}
 
-		Item item = getItem(position);
+		nameView = (TextView) view.findViewById(R.id.nameView);
+		descriptionView = (TextView) view.findViewById(R.id.descriptionView);
 
 		if (item != null) {
-			((TextView) view).setText(item.toString());
+
+			nameView.setText(item.getName());
+			descriptionView.setText(item.getDescription());
+		}
+		else {
+
+			nameView.setText("Undefined");
+			descriptionView.setText("Undefined");
 		}
 
 		return view;
