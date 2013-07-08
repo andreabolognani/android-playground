@@ -7,7 +7,6 @@ import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -15,7 +14,7 @@ public class MainActivity extends ListActivity {
 
 	private ListView listView;
 	private ArrayList<Item> items;
-	private ArrayAdapter<Item> adapter;
+	private ItemAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +28,7 @@ public class MainActivity extends ListActivity {
 		items.add(new Item("2", "..."));
 		items.add(new Item("3", "..."));
 
-		adapter = new ArrayAdapter<Item>(this,android.R.layout.simple_list_item_1, items);
+		adapter = new ItemAdapter(this, items);
 		setListAdapter(adapter);
 	}
 
