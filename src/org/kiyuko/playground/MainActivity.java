@@ -42,15 +42,22 @@ public class MainActivity extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
+		ItemAddDialogFragment dialog;
+
 		switch (menuItem.getItemId()) {
 
 			case R.id.action_add:
 
+				dialog = new ItemAddDialogFragment();
+				dialog.show(getFragmentManager(), "ItemAddDialogFragment");
+
+/*
 				items.add(new Item(Integer.valueOf(items.size() + 1).toString(), "..."));
 				adapter.notifyDataSetChanged();
 
 				// Scroll to the bottom of the ListView
 				listView.setSelection(listView.getCount() - 1);
+*/
 
 				return true;
 
