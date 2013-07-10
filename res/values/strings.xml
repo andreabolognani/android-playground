@@ -8,5 +8,7 @@
 	<string name="itemAddDialogFragmentTitle">Add item</string>
 	<string name="nameEditHint">Name</string>
 	<string name="descriptionEditHint">Description</string>
+	<string name="ok">OK</string>
+	<string name="cancel">Cancel</string>
 
 </resources>
