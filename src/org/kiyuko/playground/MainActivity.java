@@ -3,11 +3,13 @@ package org.kiyuko.playground;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -52,14 +54,6 @@ public class MainActivity extends ListActivity implements DialogFragmentListener
 				dialog = new ItemAddDialogFragment(this);
 				dialog.show(getFragmentManager(), "ItemAddDialogFragment");
 
-/*
-				items.add(new Item(Integer.valueOf(items.size() + 1).toString(), "..."));
-				adapter.notifyDataSetChanged();
-
-				// Scroll to the bottom of the ListView
-				listView.setSelection(listView.getCount() - 1);
-*/
-
 				return true;
 
 			case R.id.action_settings:
@@ -80,12 +74,27 @@ public class MainActivity extends ListActivity implements DialogFragmentListener
 	}
 
 	@Override
-	public void onPositiveClick(DialogFragment dialog) {
-		notImplemented();
+	public void onPositiveClick(DialogFragment fragment) {
+
+		Dialog dialog;
+		EditText nameEdit;
+		EditText descriptionEdit;
+		Item item;
+
+		dialog = (Dialog) fragment.getDialog();
+		nameEdit = (EditText) dialog.findViewById(R.id.nameEdit);
+		descriptionEdit = (EditText) dialog.findViewById(R.id.descriptionEdit);
+
+		item = new Item(nameEdit.getText().toString(), descriptionEdit.getText().toString());
+		items.add(item);
+		adapter.notifyDataSetChanged();
+
+		// Scroll to the bottom of the ListView
+		listView.setSelection(listView.getCount() - 1);
 	}
 
 	@Override
-	public void onNegativeClick(DialogFragment dialog) {
+	public void onNegativeClick(DialogFragment fragment) {
 		// Do nothing
 	}
 
