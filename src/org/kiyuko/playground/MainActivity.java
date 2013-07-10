@@ -3,6 +3,7 @@ package org.kiyuko.playground;
 import java.util.ArrayList;
 
 import android.os.Bundle;
+import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,7 +11,7 @@ import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends ListActivity implements DialogFragmentListener {
 
 	private ListView listView;
 	private ArrayList<Item> items;
@@ -48,7 +49,7 @@ public class MainActivity extends ListActivity {
 
 			case R.id.action_add:
 
-				dialog = new ItemAddDialogFragment();
+				dialog = new ItemAddDialogFragment(this);
 				dialog.show(getFragmentManager(), "ItemAddDialogFragment");
 
 /*
@@ -76,6 +77,16 @@ public class MainActivity extends ListActivity {
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
 		notImplemented();
+	}
+
+	@Override
+	public void onPositiveClick(DialogFragment dialog) {
+		notImplemented();
+	}
+
+	@Override
+	public void onNegativeClick(DialogFragment dialog) {
+		// Do nothing
 	}
 
 	private void notImplemented() {
