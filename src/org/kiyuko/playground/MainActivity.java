@@ -51,7 +51,7 @@ public class MainActivity extends ListActivity implements DialogFragmentListener
 
 			case R.id.action_add:
 
-				dialog = new ItemEditDialogFragment(this);
+				dialog = new ItemEditDialogFragment(new Item(), this);
 				dialog.show(getFragmentManager(), "ItemAddDialogFragment");
 
 				return true;
@@ -76,17 +76,11 @@ public class MainActivity extends ListActivity implements DialogFragmentListener
 	@Override
 	public void onPositiveClick(DialogFragment fragment) {
 
-		Dialog dialog;
-		EditText nameEdit;
-		EditText descriptionEdit;
-		Item item;
+		ItemEditDialogFragment dialog;
 
-		dialog = (Dialog) fragment.getDialog();
-		nameEdit = (EditText) dialog.findViewById(R.id.nameEdit);
-		descriptionEdit = (EditText) dialog.findViewById(R.id.descriptionEdit);
+		dialog = (ItemEditDialogFragment) fragment;
 
-		item = new Item(nameEdit.getText().toString(), descriptionEdit.getText().toString());
-		items.add(item);
+		items.add(dialog.getItem());
 		adapter.notifyDataSetChanged();
 
 		// Scroll to the bottom of the ListView
