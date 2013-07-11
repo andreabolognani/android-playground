@@ -7,6 +7,7 @@ public class Item {
 
 	public Item() {
 		this.name = "";
+		this.description = "";
 	}
 
 	public Item(String name, String description) {
