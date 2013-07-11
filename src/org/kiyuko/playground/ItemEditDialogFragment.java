@@ -9,11 +9,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 
-public class ItemAddDialogFragment extends DialogFragment {
+public class ItemEditDialogFragment extends DialogFragment {
 
 	private DialogFragmentListener listener;
 
-	public ItemAddDialogFragment(DialogFragmentListener listener) {
+	public ItemEditDialogFragment(DialogFragmentListener listener) {
 
 		super();
 
@@ -40,7 +40,7 @@ public class ItemAddDialogFragment extends DialogFragment {
 			public void onClick(DialogInterface dialog, int which) {
 
 				if (listener != null) {
-					listener.onPositiveClick(ItemAddDialogFragment.this);
+					listener.onPositiveClick(ItemEditDialogFragment.this);
 				}
 			}
 		});
@@ -51,7 +51,7 @@ public class ItemAddDialogFragment extends DialogFragment {
 			public void onClick(DialogInterface dialog, int which) {
 
 				if (listener != null) {
-					listener.onNegativeClick(ItemAddDialogFragment.this);
+					listener.onNegativeClick(ItemEditDialogFragment.this);
 				}
 			}
 		});

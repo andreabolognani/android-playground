@@ -45,13 +45,13 @@ public class MainActivity extends ListActivity implements DialogFragmentListener
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-		ItemAddDialogFragment dialog;
+		ItemEditDialogFragment dialog;
 
 		switch (menuItem.getItemId()) {
 
 			case R.id.action_add:
 
-				dialog = new ItemAddDialogFragment(this);
+				dialog = new ItemEditDialogFragment(this);
 				dialog.show(getFragmentManager(), "ItemAddDialogFragment");
 
 				return true;
