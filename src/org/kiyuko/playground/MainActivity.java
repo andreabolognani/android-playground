@@ -51,7 +51,7 @@ public class MainActivity extends ListActivity implements DialogFragmentListener
 
 			case R.id.action_add:
 
-				dialog = new ItemEditDialogFragment(new Item(), this);
+				dialog = new ItemEditDialogFragment();
 				dialog.show(getFragmentManager(), "ItemAddDialogFragment");
 
 				return true;

@@ -1,5 +1,6 @@
 package org.kiyuko.playground;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -18,12 +19,12 @@ public class ItemEditDialogFragment extends DialogFragment {
 	private EditText nameEdit;
 	private EditText descriptionEdit;
 
-	public ItemEditDialogFragment(Item item, DialogFragmentListener listener) {
+	@Override
+	public void onAttach(Activity activity) {
 
-		super();
+		super.onAttach(activity);
 
-		this.item = item;
-		this.listener = listener;
+		this.listener = (DialogFragmentListener) activity;
 	}
 
 	@Override
@@ -39,8 +40,11 @@ public class ItemEditDialogFragment extends DialogFragment {
 		nameEdit = (EditText) view.findViewById(R.id.nameEdit);
 		descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
 
-		nameEdit.setText(item.getName());
-		descriptionEdit.setText(item.getDescription());
+		if (item != null) {
+
+			nameEdit.setText(item.getName());
+			descriptionEdit.setText(item.getDescription());
+		}
 
 		builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(R.string.itemAddDialogFragmentTitle);
@@ -51,13 +55,10 @@ public class ItemEditDialogFragment extends DialogFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
-				if (listener != null) {
-
-					item.setName(nameEdit.getText().toString());
-					item.setDescription(descriptionEdit.getText().toString());
+					item = new Item(nameEdit.getText().toString(), descriptionEdit.getText().toString());
 
 					listener.onPositiveClick(ItemEditDialogFragment.this);
-				}
+
 			}
 		});
 
@@ -73,6 +74,11 @@ public class ItemEditDialogFragment extends DialogFragment {
 		});
 
 		return builder.create();
+	}
+
+	public void setItem(Item item) {
+
+		this.item = item;
 	}
 
 	public Item getItem() {
