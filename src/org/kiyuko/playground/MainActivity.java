@@ -25,9 +25,6 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 		listView = getListView();
 
 		items = new ArrayList<Item>();
-		items.add(new Item("1", "..."));
-		items.add(new Item("2", "..."));
-		items.add(new Item("3", "..."));
 
 		adapter = new ItemAdapter(this, items);
 		setListAdapter(adapter);
