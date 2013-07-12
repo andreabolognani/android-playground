@@ -14,7 +14,7 @@ import android.widget.EditText;
 public class ItemEditDialogFragment extends DialogFragment {
 
 	public interface Listener {
-		public void onPositiveClick(DialogFragment dialog);
+		public void onPositiveClick(DialogFragment dialog, Item item);
 		public void onNegativeClick(DialogFragment dialog);
 	}
 
@@ -60,10 +60,11 @@ public class ItemEditDialogFragment extends DialogFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
+					Item item;
+
 					item = new Item(nameEdit.getText().toString(), descriptionEdit.getText().toString());
 
-					listener.onPositiveClick(ItemEditDialogFragment.this);
-
+					listener.onPositiveClick(ItemEditDialogFragment.this, item);
 			}
 		});
 

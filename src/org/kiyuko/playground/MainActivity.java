@@ -72,13 +72,9 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	}
 
 	@Override
-	public void onPositiveClick(DialogFragment fragment) {
+	public void onPositiveClick(DialogFragment fragment, Item item) {
 
-		ItemEditDialogFragment dialog;
-
-		dialog = (ItemEditDialogFragment) fragment;
-
-		items.add(dialog.getItem());
+		items.add(item);
 		adapter.notifyDataSetChanged();
 
 		// Scroll to the bottom of the ListView
