@@ -40,14 +40,11 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-		ItemEditDialogFragment dialog;
-
 		switch (menuItem.getItemId()) {
 
 			case R.id.action_add:
 
-				dialog = new ItemEditDialogFragment();
-				dialog.show(getFragmentManager(), "ItemAddDialogFragment");
+				addItem();
 
 				return true;
 
@@ -81,6 +78,14 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public void onNegativeClick(DialogFragment fragment) {
 		// Do nothing
+	}
+
+	private void addItem() {
+
+		ItemEditDialogFragment dialog;
+
+		dialog = new ItemEditDialogFragment();
+		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void notImplemented() {
