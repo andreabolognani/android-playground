@@ -24,6 +24,17 @@ public class ItemEditDialogFragment extends DialogFragment {
 	private EditText nameEdit;
 	private EditText descriptionEdit;
 
+	public ItemEditDialogFragment() {
+		super();
+	}
+
+	public ItemEditDialogFragment(Item item) {
+
+		super();
+
+		this.item = item;
+	}
+
 	@Override
 	public void onAttach(Activity activity) {
 
@@ -80,15 +91,5 @@ public class ItemEditDialogFragment extends DialogFragment {
 		});
 
 		return builder.create();
-	}
-
-	public void setItem(Item item) {
-
-		this.item = item;
-	}
-
-	public Item getItem() {
-
-		return this.item;
 	}
 }
