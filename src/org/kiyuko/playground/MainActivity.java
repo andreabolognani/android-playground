@@ -3,13 +3,11 @@ package org.kiyuko.playground;
 import java.util.ArrayList;
 
 import android.os.Bundle;
-import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
