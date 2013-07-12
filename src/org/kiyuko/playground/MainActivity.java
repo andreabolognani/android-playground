@@ -13,7 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainActivity extends ListActivity implements DialogFragmentListener {
+public class MainActivity extends ListActivity implements ItemEditDialogFragment.Listener {
 
 	private ListView listView;
 	private ArrayList<Item> items;
