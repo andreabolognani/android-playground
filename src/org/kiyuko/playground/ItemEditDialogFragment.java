@@ -20,7 +20,6 @@ public class ItemEditDialogFragment extends DialogFragment {
 
 	private Item item;
 	private int position;
-	private Listener listener;
 
 	private EditText nameEdit;
 	private EditText descriptionEdit;
@@ -39,14 +38,6 @@ public class ItemEditDialogFragment extends DialogFragment {
 
 		this.item = item;
 		this.position = position;
-	}
-
-	@Override
-	public void onAttach(Activity activity) {
-
-		super.onAttach(activity);
-
-		this.listener = (Listener) activity;
 	}
 
 	@Override
@@ -81,7 +72,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 
 					item = new Item(nameEdit.getText().toString(), descriptionEdit.getText().toString());
 
-					listener.onPositiveClick(ItemEditDialogFragment.this, item, position);
+					((Listener) getActivity()).onPositiveClick(ItemEditDialogFragment.this, item, position);
 			}
 		});
 
@@ -90,9 +81,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
-				if (listener != null) {
-					listener.onNegativeClick(ItemEditDialogFragment.this);
-				}
+				((Listener) getActivity()).onNegativeClick(ItemEditDialogFragment.this);
 			}
 		});
 
