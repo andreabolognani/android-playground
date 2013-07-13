@@ -1,14 +1,16 @@
 package org.kiyuko.playground;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class ItemEditDialogFragment extends DialogFragment {
@@ -43,6 +45,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
+		final AlertDialog dialog;
 		AlertDialog.Builder builder;
 		LayoutInflater inflater;
 		View view;
@@ -85,6 +88,32 @@ public class ItemEditDialogFragment extends DialogFragment {
 			}
 		});
 
-		return builder.create();
+		dialog = builder.create();
+
+		nameEdit.addTextChangedListener(new TextWatcher() {
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count,
+					int after) {
+				// Do nothing
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before,
+					int count) {
+				// Do nothing
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+				Button button;
+
+				button = dialog.getButton(Dialog.BUTTON_POSITIVE);
+				button.setEnabled(s.toString().length() != 0);
+			}
+		});
+
+		return dialog;
 	}
 }
