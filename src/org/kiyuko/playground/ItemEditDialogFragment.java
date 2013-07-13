@@ -91,9 +91,14 @@ public class ItemEditDialogFragment extends DialogFragment {
 			public void afterTextChanged(Editable s) {
 
 				Button button;
+				String name;
+				String description;
+
+				name = nameEdit.getText().toString();
+				description = descriptionEdit.getText().toString();
 
 				button = dialog.getButton(Dialog.BUTTON_POSITIVE);
-				button.setEnabled(s.toString().length() != 0);
+				button.setEnabled(name.length() > 0 && description.length() > 0);
 			}
 
 			@Override
