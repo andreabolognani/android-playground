@@ -14,25 +14,31 @@ import android.widget.EditText;
 public class ItemEditDialogFragment extends DialogFragment {
 
 	public interface Listener {
-		public void onPositiveClick(DialogFragment dialog, Item item);
+		public void onPositiveClick(DialogFragment dialog, Item item, int position);
 		public void onNegativeClick(DialogFragment dialog);
 	}
 
 	private Item item;
+	private int position;
 	private Listener listener;
 
 	private EditText nameEdit;
 	private EditText descriptionEdit;
 
 	public ItemEditDialogFragment() {
+
 		super();
+
+		this.item = null;
+		this.position = -1;
 	}
 
-	public ItemEditDialogFragment(Item item) {
+	public ItemEditDialogFragment(Item item, int position) {
 
 		super();
 
 		this.item = item;
+		this.position = position;
 	}
 
 	@Override
@@ -75,7 +81,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 
 					item = new Item(nameEdit.getText().toString(), descriptionEdit.getText().toString());
 
-					listener.onPositiveClick(ItemEditDialogFragment.this, item);
+					listener.onPositiveClick(ItemEditDialogFragment.this, item, position);
 			}
 		});
 

@@ -62,17 +62,26 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		editItem(adapter.getItem(position));
+		editItem(adapter.getItem(position), position);
 	}
 
 	@Override
-	public void onPositiveClick(DialogFragment fragment, Item item) {
+	public void onPositiveClick(DialogFragment fragment, Item item, int position) {
 
-		items.add(item);
+		if (position >= 0) {
+
+			// Existing item: replace the previous one
+			items.set(position, item);
+		}
+		else {
+
+			// New item: add it to the end of the list
+			items.add(item);
+		}
 		adapter.notifyDataSetChanged();
 
-		// Scroll to the bottom of the ListView
-		listView.setSelection(listView.getCount() - 1);
+		// Scroll the ListView to the appropriate position
+		listView.setSelection(position);
 	}
 
 	@Override
@@ -88,11 +97,11 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
-	private void editItem(Item item) {
+	private void editItem(Item item, int position) {
 
 		ItemEditDialogFragment dialog;
 
-		dialog = new ItemEditDialogFragment(item);
+		dialog = new ItemEditDialogFragment(item, position);
 		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
