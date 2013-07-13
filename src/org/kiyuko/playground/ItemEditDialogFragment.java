@@ -23,9 +23,6 @@ public class ItemEditDialogFragment extends DialogFragment {
 	private Item item;
 	private int position;
 
-	private EditText nameEdit;
-	private EditText descriptionEdit;
-
 	public ItemEditDialogFragment() {
 
 		super();
@@ -45,11 +42,13 @@ public class ItemEditDialogFragment extends DialogFragment {
 	@Override
 	public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-		final AlertDialog dialog;
 		AlertDialog.Builder builder;
 		LayoutInflater inflater;
 		View view;
 		TextWatcher textWatcher;
+		final AlertDialog dialog;
+		final EditText nameEdit;
+		final EditText descriptionEdit;
 
 		inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view = inflater.inflate(R.layout.dialog_item_add, null);
