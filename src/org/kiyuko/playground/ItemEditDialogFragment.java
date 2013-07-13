@@ -49,18 +49,13 @@ public class ItemEditDialogFragment extends DialogFragment {
 		AlertDialog.Builder builder;
 		LayoutInflater inflater;
 		View view;
+		TextWatcher textWatcher;
 
 		inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view = inflater.inflate(R.layout.dialog_item_add, null);
 
 		nameEdit = (EditText) view.findViewById(R.id.nameEdit);
 		descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
-
-		if (item != null) {
-
-			nameEdit.setText(item.getName());
-			descriptionEdit.setText(item.getDescription());
-		}
 
 		builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle(R.string.itemAddDialogFragmentTitle);
@@ -89,8 +84,18 @@ public class ItemEditDialogFragment extends DialogFragment {
 		});
 
 		dialog = builder.create();
+		dialog.show();
 
-		nameEdit.addTextChangedListener(new TextWatcher() {
+		textWatcher = new TextWatcher() {
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+				Button button;
+
+				button = dialog.getButton(Dialog.BUTTON_POSITIVE);
+				button.setEnabled(s.toString().length() != 0);
+			}
 
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count,
@@ -103,16 +108,23 @@ public class ItemEditDialogFragment extends DialogFragment {
 					int count) {
 				// Do nothing
 			}
+		};
 
-			@Override
-			public void afterTextChanged(Editable s) {
+		nameEdit.addTextChangedListener(textWatcher);
+		descriptionEdit.addTextChangedListener(textWatcher);
 
-				Button button;
+		if (item != null) {
 
-				button = dialog.getButton(Dialog.BUTTON_POSITIVE);
-				button.setEnabled(s.toString().length() != 0);
-			}
-		});
+			// Fill in with the existing information
+			nameEdit.setText(item.getName());
+			descriptionEdit.setText(item.getDescription());
+		}
+		else {
+
+			// Set to empty to trigger the TextWatcher
+			nameEdit.setText("");
+			descriptionEdit.setText("");
+		}
 
 		return dialog;
 	}
