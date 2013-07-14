@@ -5,28 +5,46 @@ import java.util.ArrayList;
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.app.ListActivity;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends ListActivity implements ItemEditDialogFragment.Listener {
 
+	private SQLiteDatabase db;
 	private ListView listView;
 	private ArrayList<Item> items;
-	private ItemAdapter adapter;
+	private ListAdapter adapter;
 
+	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
+		ItemDatabaseHelper dbHelper;
+		Cursor cursor;
+
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		listView = getListView();
 
-		items = new ArrayList<Item>();
+		dbHelper = new ItemDatabaseHelper(this);
+		db = dbHelper.getReadableDatabase();
 
-		adapter = new ItemAdapter(this, items);
+		cursor = db.query("items", new String[] {"_id", "name", "description"}, null, null, null, null, null, null);
+
+		adapter = new SimpleCursorAdapter(this,
+				R.layout.item,
+				cursor,
+				new String[] {"name", "description"},
+				new int[] {R.id.nameView, R.id.descriptionView});
 		setListAdapter(adapter);
 	}
 
@@ -62,7 +80,7 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		editItem(adapter.getItem(position), position);
+		//editItem(adapter.getItem(position), position);
 	}
 
 	@Override
@@ -78,7 +96,7 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 			// New item: add it to the end of the list
 			items.add(item);
 		}
-		adapter.notifyDataSetChanged();
+		//adapter.notifyDataSetChanged();
 
 		// Scroll the ListView to the appropriate position
 		listView.setSelection(position);
@@ -91,18 +109,22 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 	private void addItem() {
 
-		ItemEditDialogFragment dialog;
+		notImplemented();
 
-		dialog = new ItemEditDialogFragment();
-		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
+//		ItemEditDialogFragment dialog;
+//
+//		dialog = new ItemEditDialogFragment();
+//		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void editItem(Item item, int position) {
 
-		ItemEditDialogFragment dialog;
+		notImplemented();
 
-		dialog = new ItemEditDialogFragment(item, position);
-		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
+//		ItemEditDialogFragment dialog;
+//
+//		dialog = new ItemEditDialogFragment(item, position);
+//		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void notImplemented() {
