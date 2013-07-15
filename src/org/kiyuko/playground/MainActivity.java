@@ -74,7 +74,14 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		//editItem(adapter.getItem(position), position);
+		Item item;
+
+		item = dbHelper.get(position);
+
+		if (item != null) {
+
+			editItem(item, position);
+		}
 	}
 
 	@Override
@@ -102,12 +109,10 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 	private void editItem(Item item, int position) {
 
-		notImplemented();
+		ItemEditDialogFragment dialog;
 
-//		ItemEditDialogFragment dialog;
-//
-//		dialog = new ItemEditDialogFragment(item, position);
-//		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
+		dialog = new ItemEditDialogFragment(item, position);
+		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void notImplemented() {

@@ -65,31 +65,49 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		return cursor;
 	}
 
-	public void set(int position, Item item) {
+	public Item get(int position) {
 
 		SQLiteDatabase db;
 		Cursor cursor;
-		ContentValues values;
-		String[] selectionArgs;
+		Item item;
 
-		db = getWritableDatabase();
+		db = getReadableDatabase();
 
 		if (db == null) {
-			return;
+			return null;
 		}
-
-		selectionArgs = new String[] { "" + position };
 
 		// Look for existing Items at the given position
 		cursor = db.query(TABLE_ITEMS,
 			PROJECTION,
 			SELECTION,
-			selectionArgs,
+			new String[] { "" + position },
 			null,
 			null,
 			null);
 
-		if (cursor == null) {
+		if (cursor.getCount() <= 0) {
+			return null;
+		}
+
+		if (!cursor.moveToFirst()) {
+			return null;
+		}
+
+		item = new Item(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+				cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
+
+		return item;
+	}
+
+	public void set(int position, Item item) {
+
+		SQLiteDatabase db;
+		ContentValues values;
+
+		db = getWritableDatabase();
+
+		if (db == null) {
 			return;
 		}
 
@@ -98,13 +116,13 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_NAME, item.getName());
 		values.put(COLUMN_DESCRIPTION, item.getDescription());
 
-		if (cursor.getCount() > 0) {
+		if (get(position) != null) {
 
 			// Update an existing Item
 			db.update(TABLE_ITEMS,
 				values,
 				SELECTION,
-				selectionArgs);
+				new String[] { "" + position });
 		}
 		else {
 
