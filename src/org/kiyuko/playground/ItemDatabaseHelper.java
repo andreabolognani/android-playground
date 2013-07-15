@@ -87,10 +87,16 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 			null);
 
 		if (cursor.getCount() <= 0) {
+
+			cursor.close();
+
 			return null;
 		}
 
 		if (!cursor.moveToFirst()) {
+
+			cursor.close();
+
 			return null;
 		}
 
