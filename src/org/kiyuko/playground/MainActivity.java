@@ -80,7 +80,7 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public void onPositiveClick(DialogFragment fragment, Item item, int position) {
 
-		dbHelper.addItem(item, position);
+		dbHelper.set(position, item);
 		adapter.changeCursor(dbHelper.getAllItemsCursor());
 
 		// Scroll the ListView to the appropriate position

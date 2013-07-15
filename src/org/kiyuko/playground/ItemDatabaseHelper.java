@@ -16,6 +16,9 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 	private static String COLUMN_NAME = "name";
 	private static String COLUMN_DESCRIPTION = "description";
 
+	private static String[] PROJECTION = new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION };
+	private static String SELECTION = COLUMN_ID + " = ?";
+
 	public ItemDatabaseHelper(Context context) {
 
 		// Use the default Cursor factory
@@ -46,40 +49,69 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
 		db = getReadableDatabase();
 
-		if (db != null) {
-
-			cursor = db.query(TABLE_ITEMS,
-				new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION },
-				null,
-				null,
-				null,
-				null,
-				null,
-				null);
+		if (db == null) {
+			return null;
 		}
-		else {
 
-			cursor = null;
-		}
+		cursor = db.query(TABLE_ITEMS,
+			new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION },
+			null,
+			null,
+			null,
+			null,
+			null,
+			null);
 
 		return cursor;
 	}
 
-	public void addItem(Item item, int position) {
+	public void set(int position, Item item) {
 
 		SQLiteDatabase db;
+		Cursor cursor;
 		ContentValues values;
+		String[] selectionArgs;
+
+		db = getWritableDatabase();
+
+		if (db == null) {
+			return;
+		}
+
+		selectionArgs = new String[] { "" + position };
+
+		// Look for existing Items at the given position
+		cursor = db.query(TABLE_ITEMS,
+			PROJECTION,
+			SELECTION,
+			selectionArgs,
+			null,
+			null,
+			null);
+
+		if (cursor == null) {
+			return;
+		}
 
 		values = new ContentValues();
 		values.put(COLUMN_ID, position);
 		values.put(COLUMN_NAME, item.getName());
 		values.put(COLUMN_DESCRIPTION, item.getDescription());
 
-		db = getWritableDatabase();
+		if (cursor.getCount() > 0) {
 
-		if (db != null) {
+			// Update an existing Item
+			db.update(TABLE_ITEMS,
+				values,
+				SELECTION,
+				selectionArgs);
+		}
+		else {
 
-			db.insert(TABLE_ITEMS, null, values);
+			// Add a new Item
+			db.insert(TABLE_ITEMS,
+				null,
+				values);
 		}
 	}
 }
