@@ -32,12 +32,15 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 		cursor = new ItemDatabaseHelper(this).getAllItemsCursor();
 
-		adapter = new SimpleCursorAdapter(this,
-				R.layout.item,
-				cursor,
-				new String[] {"name", "description"},
-				new int[] {R.id.nameView, R.id.descriptionView});
-		setListAdapter(adapter);
+		if (cursor != null) {
+
+			adapter = new SimpleCursorAdapter(this,
+					R.layout.item,
+					cursor,
+					new String[] {"name", "description"},
+					new int[] {R.id.nameView, R.id.descriptionView});
+			setListAdapter(adapter);
+		}
 	}
 
 	@Override

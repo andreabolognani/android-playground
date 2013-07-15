@@ -45,14 +45,22 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		Cursor cursor;
 
 		db = getReadableDatabase();
-		cursor = db.query(TABLE_ITEMS,
-			new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION },
-			null,
-			null,
-			null,
-			null,
-			null,
-			null);
+
+		if (db != null) {
+
+			cursor = db.query(TABLE_ITEMS,
+				new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION },
+				null,
+				null,
+				null,
+				null,
+				null,
+				null);
+		}
+		else {
+
+			cursor = null;
+		}
 
 		return cursor;
 	}
@@ -68,6 +76,10 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		values.put(COLUMN_DESCRIPTION, item.getDescription());
 
 		db = getWritableDatabase();
-		db.insert(TABLE_ITEMS, null, values);
+
+		if (db != null) {
+
+			db.insert(TABLE_ITEMS, null, values);
+		}
 	}
 }
