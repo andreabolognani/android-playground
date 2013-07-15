@@ -31,6 +31,14 @@ public class ItemEditDialogFragment extends DialogFragment {
 		this.position = -1;
 	}
 
+	public ItemEditDialogFragment(int position) {
+
+		super();
+
+		this.item = null;
+		this.position = position;
+	}
+
 	public ItemEditDialogFragment(Item item, int position) {
 
 		super();

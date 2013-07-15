@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -27,7 +28,6 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		ItemDatabaseHelper dbHelper;
 		Cursor cursor;
 
 		super.onCreate(savedInstanceState);
@@ -35,10 +35,7 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 		listView = getListView();
 
-		dbHelper = new ItemDatabaseHelper(this);
-		db = dbHelper.getReadableDatabase();
-
-		cursor = db.query("items", new String[] {"_id", "name", "description"}, null, null, null, null, null, null);
+		cursor = new ItemDatabaseHelper(this).getAllItemsCursor();
 
 		adapter = new SimpleCursorAdapter(this,
 				R.layout.item,
@@ -86,17 +83,7 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public void onPositiveClick(DialogFragment fragment, Item item, int position) {
 
-		if (position >= 0) {
-
-			// Existing item: replace the previous one
-			items.set(position, item);
-		}
-		else {
-
-			// New item: add it to the end of the list
-			items.add(item);
-		}
-		//adapter.notifyDataSetChanged();
+		new ItemDatabaseHelper(this).addItem(item, position);
 
 		// Scroll the ListView to the appropriate position
 		listView.setSelection(position);
@@ -109,12 +96,10 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 	private void addItem() {
 
-		notImplemented();
+		ItemEditDialogFragment dialog;
 
-//		ItemEditDialogFragment dialog;
-//
-//		dialog = new ItemEditDialogFragment();
-//		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
+		dialog = new ItemEditDialogFragment(adapter.getCount());
+		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void editItem(Item item, int position) {

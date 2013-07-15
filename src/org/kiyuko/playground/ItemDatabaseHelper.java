@@ -1,9 +1,10 @@
 package org.kiyuko.playground;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
@@ -27,17 +28,46 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		// Create a table to store items
 		db.execSQL("CREATE TABLE " + TABLE_ITEMS +
 				" (" +
-					COLUMN_ID + " INTEGER PRIMARY KEY, " +
-					COLUMN_NAME + " TEXT, " +
-					COLUMN_DESCRIPTION + " TEXT" +
+				COLUMN_ID + " INTEGER PRIMARY KEY, " +
+				COLUMN_NAME + " TEXT, " +
+				COLUMN_DESCRIPTION + " TEXT" +
 				");");
-//		db.execSQL("INSERT INTO " + TABLE_ITEMS +
-//				" VALUES (1, \"test\", \"test description\");");
 	}
 
 	@Override
-	public void onUpgrade(SQLiteDatabase arg0, int arg1, int arg2) {
+	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 		// Do nothing
 	}
 
+	public Cursor getAllItemsCursor() {
+
+		SQLiteDatabase db;
+		Cursor cursor;
+
+		db = getReadableDatabase();
+		cursor = db.query(TABLE_ITEMS,
+			new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION },
+			null,
+			null,
+			null,
+			null,
+			null,
+			null);
+
+		return cursor;
+	}
+
+	public void addItem(Item item, int position) {
+
+		SQLiteDatabase db;
+		ContentValues values;
+
+		values = new ContentValues();
+		values.put(COLUMN_ID, position);
+		values.put(COLUMN_NAME, item.getName());
+		values.put(COLUMN_DESCRIPTION, item.getDescription());
+
+		db = getWritableDatabase();
+		db.insert(TABLE_ITEMS, null, values);
+	}
 }
