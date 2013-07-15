@@ -1,7 +1,5 @@
 package org.kiyuko.playground;
 
-import java.util.ArrayList;
-
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.app.ListActivity;
@@ -10,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
-import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -21,7 +17,6 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 	private SQLiteDatabase db;
 	private ListView listView;
-	private ArrayList<Item> items;
 	private ListAdapter adapter;
 
 	@SuppressWarnings("deprecation")
