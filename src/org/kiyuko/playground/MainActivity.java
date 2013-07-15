@@ -4,20 +4,18 @@ import android.os.Bundle;
 import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends ListActivity implements ItemEditDialogFragment.Listener {
 
-	private SQLiteDatabase db;
+	private ItemDatabaseHelper dbHelper;
 	private ListView listView;
-	private ListAdapter adapter;
+	private SimpleCursorAdapter adapter;
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -30,7 +28,8 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 		listView = getListView();
 
-		cursor = new ItemDatabaseHelper(this).getAllItemsCursor();
+		dbHelper = new ItemDatabaseHelper(this);
+		cursor = dbHelper.getAllItemsCursor();
 
 		if (cursor != null) {
 
@@ -81,7 +80,8 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 	@Override
 	public void onPositiveClick(DialogFragment fragment, Item item, int position) {
 
-		new ItemDatabaseHelper(this).addItem(item, position);
+		dbHelper.addItem(item, position);
+		adapter.changeCursor(dbHelper.getAllItemsCursor());
 
 		// Scroll the ListView to the appropriate position
 		listView.setSelection(position);
