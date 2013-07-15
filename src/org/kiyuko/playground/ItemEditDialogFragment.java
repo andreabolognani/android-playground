@@ -15,19 +15,25 @@ import android.widget.EditText;
 
 public class ItemEditDialogFragment extends DialogFragment {
 
+	private static String BUNDLE_NAME = "name";
+	private static String BUNDLE_DESCRIPTION = "description";
+	private static String BUNDLE_POSITION = "position";
+
+	private String name;
+	private String description;
+	private int position;
+
 	public interface Listener {
 		public void onPositiveClick(DialogFragment dialog, Item item, int position);
 		public void onNegativeClick(DialogFragment dialog);
 	}
 
-	private Item item;
-	private int position;
-
 	public ItemEditDialogFragment() {
 
 		super();
 
-		this.item = null;
+		this.name = "";
+		this.description = "";
 		this.position = -1;
 	}
 
@@ -35,7 +41,8 @@ public class ItemEditDialogFragment extends DialogFragment {
 
 		super();
 
-		this.item = null;
+		this.name = "";
+		this.description = "";
 		this.position = position;
 	}
 
@@ -43,7 +50,8 @@ public class ItemEditDialogFragment extends DialogFragment {
 
 		super();
 
-		this.item = item;
+		this.name = item.getName();
+		this.description = item.getDescription();
 		this.position = position;
 	}
 
@@ -57,6 +65,13 @@ public class ItemEditDialogFragment extends DialogFragment {
 		final AlertDialog dialog;
 		final EditText nameEdit;
 		final EditText descriptionEdit;
+
+		if (savedInstanceState != null) {
+
+			name = savedInstanceState.getString(BUNDLE_NAME);
+			description = savedInstanceState.getString(BUNDLE_DESCRIPTION);
+			position = savedInstanceState.getInt(BUNDLE_POSITION);
+		}
 
 		inflater = (LayoutInflater) getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		view = inflater.inflate(R.layout.dialog_item_add, null);
@@ -125,19 +140,20 @@ public class ItemEditDialogFragment extends DialogFragment {
 		nameEdit.addTextChangedListener(textWatcher);
 		descriptionEdit.addTextChangedListener(textWatcher);
 
-		if (item != null) {
-
-			// Fill in with the existing information
-			nameEdit.setText(item.getName());
-			descriptionEdit.setText(item.getDescription());
-		}
-		else {
-
-			// Set to empty to trigger the TextWatcher
-			nameEdit.setText("");
-			descriptionEdit.setText("");
-		}
+		// Fill in with the existing information
+		nameEdit.setText(name);
+		descriptionEdit.setText(description);
 
 		return dialog;
+	}
+
+	@Override
+	public void onSaveInstanceState(Bundle outState) {
+
+		super.onSaveInstanceState(outState);
+
+		outState.putString(BUNDLE_NAME, name);
+		outState.putString(BUNDLE_DESCRIPTION, description);
+		outState.putInt(BUNDLE_POSITION, position);
 	}
 }
