@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-public class ItemEditDialogFragment extends DialogFragment {
+public class ItemDetailsDialogFragment extends DialogFragment {
 
 	private static String BUNDLE_NAME = "name";
 	private static String BUNDLE_DESCRIPTION = "description";
@@ -28,7 +28,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 		public void onNegativeClick(DialogFragment dialog);
 	}
 
-	public ItemEditDialogFragment() {
+	public ItemDetailsDialogFragment() {
 
 		super();
 
@@ -37,7 +37,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 		this.position = -1;
 	}
 
-	public ItemEditDialogFragment(int position) {
+	public ItemDetailsDialogFragment(int position) {
 
 		super();
 
@@ -46,7 +46,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 		this.position = position;
 	}
 
-	public ItemEditDialogFragment(Item item, int position) {
+	public ItemDetailsDialogFragment(Item item, int position) {
 
 		super();
 
@@ -92,7 +92,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 
 					item = new Item(nameEdit.getText().toString(), descriptionEdit.getText().toString());
 
-					((Listener) getActivity()).onPositiveClick(ItemEditDialogFragment.this, item, position);
+					((Listener) getActivity()).onPositiveClick(ItemDetailsDialogFragment.this, item, position);
 			}
 		});
 
@@ -101,7 +101,7 @@ public class ItemEditDialogFragment extends DialogFragment {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 
-				((Listener) getActivity()).onNegativeClick(ItemEditDialogFragment.this);
+				((Listener) getActivity()).onNegativeClick(ItemDetailsDialogFragment.this);
 			}
 		});
 

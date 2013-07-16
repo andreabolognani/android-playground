@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-public class MainActivity extends ListActivity implements ItemEditDialogFragment.Listener {
+public class MainActivity extends ListActivity implements ItemDetailsDialogFragment.Listener {
 
 	private ItemDatabaseHelper dbHelper;
 	private ListView listView;
@@ -109,17 +109,17 @@ public class MainActivity extends ListActivity implements ItemEditDialogFragment
 
 	private void addItem() {
 
-		ItemEditDialogFragment dialog;
+		ItemDetailsDialogFragment dialog;
 
-		dialog = new ItemEditDialogFragment(adapter.getCount());
+		dialog = new ItemDetailsDialogFragment(adapter.getCount());
 		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void editItem(Item item, int position) {
 
-		ItemEditDialogFragment dialog;
+		ItemDetailsDialogFragment dialog;
 
-		dialog = new ItemEditDialogFragment(item, position);
+		dialog = new ItemDetailsDialogFragment(item, position);
 		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
