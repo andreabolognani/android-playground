@@ -15,10 +15,15 @@ import android.widget.EditText;
 
 public class ItemDetailsDialogFragment extends DialogFragment {
 
+	private static int MODE_ADD = 1;
+	private static int MODE_EDIT = 2;
+
+	private static String BUNDLE_MODE = "mode";
 	private static String BUNDLE_NAME = "name";
 	private static String BUNDLE_DESCRIPTION = "description";
 	private static String BUNDLE_POSITION = "position";
 
+	private int mode;
 	private String name;
 	private String description;
 	private int position;
@@ -32,6 +37,7 @@ public class ItemDetailsDialogFragment extends DialogFragment {
 
 		super();
 
+		this.mode = MODE_ADD;
 		this.name = "";
 		this.description = "";
 		this.position = -1;
@@ -41,6 +47,7 @@ public class ItemDetailsDialogFragment extends DialogFragment {
 
 		super();
 
+		this.mode = MODE_ADD;
 		this.name = "";
 		this.description = "";
 		this.position = position;
@@ -50,6 +57,7 @@ public class ItemDetailsDialogFragment extends DialogFragment {
 
 		super();
 
+		this.mode = MODE_EDIT;
 		this.name = item.getName();
 		this.description = item.getDescription();
 		this.position = position;
@@ -68,6 +76,7 @@ public class ItemDetailsDialogFragment extends DialogFragment {
 
 		if (savedInstanceState != null) {
 
+			mode = savedInstanceState.getInt(BUNDLE_MODE);
 			name = savedInstanceState.getString(BUNDLE_NAME);
 			description = savedInstanceState.getString(BUNDLE_DESCRIPTION);
 			position = savedInstanceState.getInt(BUNDLE_POSITION);
@@ -80,8 +89,17 @@ public class ItemDetailsDialogFragment extends DialogFragment {
 		descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
 
 		builder = new AlertDialog.Builder(getActivity());
-		builder.setTitle(R.string.itemAddDialogFragmentTitle);
 		builder.setView(view);
+
+		// Use a title that's appropriate for the current mode
+		if (mode == MODE_ADD) {
+
+			builder.setTitle(R.string.addItem);
+		}
+		else if (mode == MODE_EDIT) {
+
+			builder.setTitle(R.string.editItem);
+		}
 
 		builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 
@@ -152,6 +170,7 @@ public class ItemDetailsDialogFragment extends DialogFragment {
 
 		super.onSaveInstanceState(outState);
 
+		outState.putInt(BUNDLE_MODE, mode);
 		outState.putString(BUNDLE_NAME, name);
 		outState.putString(BUNDLE_DESCRIPTION, description);
 		outState.putInt(BUNDLE_POSITION, position);
