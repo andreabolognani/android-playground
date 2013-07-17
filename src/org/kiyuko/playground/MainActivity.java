@@ -3,6 +3,7 @@ package org.kiyuko.playground;
 import android.os.Bundle;
 import android.app.DialogFragment;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -70,7 +71,10 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 
 			case R.id.action_settings:
 
-				notImplemented();
+				Intent intent;
+
+				intent = new Intent(this, DetailsActivity.class);
+				startActivity(intent);
 
 				return true;
 
