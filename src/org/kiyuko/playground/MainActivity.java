@@ -71,10 +71,7 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 
 			case R.id.action_settings:
 
-				Intent intent;
-
-				intent = new Intent(this, DetailsActivity.class);
-				startActivity(intent);
+				notImplemented();
 
 				return true;
 
@@ -123,10 +120,21 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 
 	private void editItem(Item item, int position) {
 
-		ItemDetailsDialogFragment dialog;
 
-		dialog = new ItemDetailsDialogFragment(item, position);
-		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
+		Intent intent;
+
+		intent = new Intent(this, DetailsActivity.class);
+
+		intent.putExtra(DetailsFragment.EXTRA_NAME, item.getName());
+		intent.putExtra(DetailsFragment.EXTRA_DESCRIPTION, item.getDescription());
+		intent.putExtra(DetailsFragment.EXTRA_POSITION, position);
+
+		startActivity(intent);
+
+//		ItemDetailsDialogFragment dialog;
+//
+//		dialog = new ItemDetailsDialogFragment(item, position);
+//		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void notImplemented() {
