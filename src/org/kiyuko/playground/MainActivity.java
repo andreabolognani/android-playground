@@ -103,7 +103,9 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 		adapter.changeCursor(dbHelper.getAllItemsCursor());
 
 		// Scroll the ListView to the appropriate position
-		listView.setSelection(position);
+		if (position < listView.getFirstVisiblePosition() || position > listView.getLastVisiblePosition()) {
+			listView.setSelection(position);
+		}
 	}
 
 	@Override
