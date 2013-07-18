@@ -32,9 +32,9 @@ public class DetailsActivity extends Activity {
 			arguments = new Bundle();
 
 			// Copy parameters from the intent's extras to the fragment's arguments
-			arguments.putString(DetailsFragment.EXTRA_NAME, extras.getString(DetailsFragment.EXTRA_NAME));
-			arguments.putString(DetailsFragment.EXTRA_DESCRIPTION, extras.getString(DetailsFragment.EXTRA_DESCRIPTION));
-			arguments.putInt(DetailsFragment.EXTRA_POSITION, extras.getInt(DetailsFragment.EXTRA_POSITION));
+			arguments.putString(DetailsFragment.PARAMETER_NAME, extras.getString(DetailsFragment.PARAMETER_NAME));
+			arguments.putString(DetailsFragment.PARAMETER_DESCRIPTION, extras.getString(DetailsFragment.PARAMETER_DESCRIPTION));
+			arguments.putInt(DetailsFragment.PARAMETER_POSITION, extras.getInt(DetailsFragment.PARAMETER_POSITION));
 			detailsFragment.setArguments(arguments);
 
 			// Show the fragment

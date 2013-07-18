@@ -125,9 +125,9 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 
 		intent = new Intent(this, DetailsActivity.class);
 
-		intent.putExtra(DetailsFragment.EXTRA_NAME, item.getName());
-		intent.putExtra(DetailsFragment.EXTRA_DESCRIPTION, item.getDescription());
-		intent.putExtra(DetailsFragment.EXTRA_POSITION, position);
+		intent.putExtra(DetailsFragment.PARAMETER_NAME, item.getName());
+		intent.putExtra(DetailsFragment.PARAMETER_DESCRIPTION, item.getDescription());
+		intent.putExtra(DetailsFragment.PARAMETER_POSITION, position);
 
 		startActivity(intent);
 

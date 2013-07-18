@@ -9,9 +9,9 @@ import android.widget.EditText;
 
 public class DetailsFragment extends Fragment {
 
-	public static final String EXTRA_NAME = "org.kiyuko.playground.DetailsFragment.EXTRA_NAME";
-	public static final String EXTRA_DESCRIPTION = "org.kiyuko.playground.DetailsFragment.EXTRA_DESCRIPTION";
-	public static final String EXTRA_POSITION = "org.kiyuko.playground.DetailsFragment.EXTRA_POSITION";
+	public static final String PARAMETER_NAME = "org.kiyuko.playground.DetailsFragment.PARAMETER_NAME";
+	public static final String PARAMETER_DESCRIPTION = "org.kiyuko.playground.DetailsFragment.PARAMETER_DESCRIPTION";
+	public static final String PARAMETER_POSITION = "org.kiyuko.playground.DetailsFragment.PARAMETER_POSITION";
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,8 +32,8 @@ public class DetailsFragment extends Fragment {
 
 		if (getArguments() != null) {
 
-			nameEdit.setText(getArguments().getString(EXTRA_NAME));
-			descriptionEdit.setText(getArguments().getString(EXTRA_DESCRIPTION));
+			nameEdit.setText(getArguments().getString(PARAMETER_NAME));
+			descriptionEdit.setText(getArguments().getString(PARAMETER_DESCRIPTION));
 		}
 
 		return view;
