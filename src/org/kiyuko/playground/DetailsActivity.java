@@ -12,7 +12,6 @@ public class DetailsActivity extends Activity {
 		DetailsFragment detailsFragment;
 		Intent intent;
 		Bundle extras;
-		Bundle arguments;
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
@@ -28,14 +27,9 @@ public class DetailsActivity extends Activity {
 			intent = getIntent();
 			extras = intent.getExtras();
 
-			detailsFragment = new DetailsFragment();
-			arguments = new Bundle();
-
-			// Copy parameters from the intent's extras to the fragment's arguments
-			arguments.putString(DetailsFragment.PARAMETER_NAME, extras.getString(DetailsFragment.PARAMETER_NAME));
-			arguments.putString(DetailsFragment.PARAMETER_DESCRIPTION, extras.getString(DetailsFragment.PARAMETER_DESCRIPTION));
-			arguments.putInt(DetailsFragment.PARAMETER_POSITION, extras.getInt(DetailsFragment.PARAMETER_POSITION));
-			detailsFragment.setArguments(arguments);
+			detailsFragment = DetailsFragment.newInstance(extras.getString(DetailsFragment.PARAMETER_NAME),
+					extras.getString(DetailsFragment.PARAMETER_DESCRIPTION),
+					extras.getInt(DetailsFragment.PARAMETER_POSITION));
 
 			// Show the fragment
 			getFragmentManager().beginTransaction()
