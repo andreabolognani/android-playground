@@ -17,6 +17,9 @@ public class DetailsFragment extends Fragment {
 	private String description;
 	private int position;
 
+	private EditText nameEdit;
+	private EditText descriptionEdit;
+
 	public static DetailsFragment newInstance(String name, String description, int position) {
 
 		DetailsFragment fragment;
@@ -34,8 +37,6 @@ public class DetailsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view;
-		EditText nameEdit;
-		EditText descriptionEdit;
 
 		view = inflater.inflate(R.layout.fragment_details, container, false);
 		nameEdit = (EditText) view.findViewById(R.id.nameEdit);
@@ -52,6 +53,33 @@ public class DetailsFragment extends Fragment {
 		descriptionEdit.setText(description);
 
 		return view;
+	}
+
+	@Override
+	public void onPause() {
+
+		ItemDatabaseHelper dbHelper;
+		Item item;
+
+		// Retrieve data from the form
+		name = nameEdit.getText().toString();
+		description = descriptionEdit.getText().toString();
+
+		// Ignore changes if either of the fields is empty
+		if (name.length() <= 0 || description.length() <= 0) {
+
+			super.onPause();
+
+			return;
+		}
+
+		// Store the modified item
+		dbHelper = new ItemDatabaseHelper(getActivity());
+		item = new Item(name, description);
+
+		dbHelper.set(position, item);
+
+		super.onPause();
 	}
 
 	@Override
