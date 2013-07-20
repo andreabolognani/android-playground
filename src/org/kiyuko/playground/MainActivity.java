@@ -112,14 +112,18 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 
 	private void addItem() {
 
-		ItemDetailsDialogFragment dialog;
+		Intent intent;
 
-		dialog = new ItemDetailsDialogFragment(adapter.getCount());
-		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
+		intent = new Intent(this, DetailsActivity.class);
+
+		intent.putExtra(DetailsFragment.PARAMETER_NAME, "");
+		intent.putExtra(DetailsFragment.PARAMETER_DESCRIPTION, "");
+		intent.putExtra(DetailsFragment.PARAMETER_POSITION, adapter.getCount());
+
+		startActivity(intent);
 	}
 
 	private void editItem(Item item, int position) {
-
 
 		Intent intent;
 
@@ -130,11 +134,6 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 		intent.putExtra(DetailsFragment.PARAMETER_POSITION, position);
 
 		startActivity(intent);
-
-//		ItemDetailsDialogFragment dialog;
-//
-//		dialog = new ItemDetailsDialogFragment(item, position);
-//		dialog.show(getFragmentManager(), "ItemEditDialogFragment");
 	}
 
 	private void notImplemented() {
