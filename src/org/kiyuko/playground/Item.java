@@ -2,13 +2,15 @@ package org.kiyuko.playground;
 
 public class Item {
 
+	public static final int INVALID_ID = -1;
+
 	private int id;
 	private String name;
 	private String description;
 
 	public Item() {
 
-		this.id = -1;
+		this.id = INVALID_ID;
 		this.name = "";
 		this.description = "";
 	}

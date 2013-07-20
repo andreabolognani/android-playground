@@ -51,12 +51,12 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		db = getReadableDatabase();
 
 		if (db == null) {
-			return -1;
+			return Item.INVALID_ID;
 		}
 
 		cursor = db.query(TABLE_ITEMS,
 			new String[] { COLUMN_ID },
-			"_id >= 0",
+			"_id > " + Item.INVALID_ID,
 			null,
 			null,
 			null,

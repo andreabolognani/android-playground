@@ -22,7 +22,7 @@ public class DetailsFragment extends Fragment {
 		DetailsFragment fragment;
 
 		fragment = new DetailsFragment();
-		fragment.id = -1;
+		fragment.id = Item.INVALID_ID;
 
 		return fragment;
 	}
@@ -57,16 +57,16 @@ public class DetailsFragment extends Fragment {
 		}
 		else {
 
-			if (id >= 0) {
-
-				// Existing item: retrieve it from the database
-				item = dbHelper.get(id);
-			}
-			else {
+			if (id == Item.INVALID_ID) {
 
 				// New item: ask the database for a new id
 				id = dbHelper.newId();
 				item = new Item(id, "", "");
+			}
+			else {
+
+				// Existing item: retrieve it from the database
+				item = dbHelper.get(id);
 			}
 
 			nameEdit.setText(item.getName());
