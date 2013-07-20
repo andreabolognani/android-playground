@@ -42,6 +42,46 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		// Do nothing
 	}
 
+	public int newId() {
+
+		SQLiteDatabase db;
+		Cursor cursor;
+		int id;
+
+		db = getReadableDatabase();
+
+		if (db == null) {
+			return -1;
+		}
+
+		cursor = db.query(TABLE_ITEMS,
+			new String[] { COLUMN_ID },
+			"_id >= 0",
+			null,
+			null,
+			null,
+			COLUMN_ID);
+
+		if (cursor.getCount() <= 0) {
+
+			cursor.close();
+
+			return 0;
+		}
+
+		if (!cursor.moveToLast()) {
+
+			cursor.close();
+
+			return 0;
+		}
+
+		id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+		id += 1;
+
+		return id;
+	}
+
 	public Cursor getAllItemsCursor() {
 
 		SQLiteDatabase db;
@@ -54,18 +94,17 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		}
 
 		cursor = db.query(TABLE_ITEMS,
-			new String[] { COLUMN_ID, COLUMN_NAME, COLUMN_DESCRIPTION },
+			PROJECTION,
+			"_id >= 0",
 			null,
 			null,
 			null,
-			null,
-			null,
-			null);
+			COLUMN_ID);
 
 		return cursor;
 	}
 
-	public Item get(int position) {
+	public Item get(int id) {
 
 		SQLiteDatabase db;
 		Cursor cursor;
@@ -81,7 +120,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		cursor = db.query(TABLE_ITEMS,
 			PROJECTION,
 			SELECTION,
-			new String[] { "" + position },
+			new String[] { "" + id },
 			null,
 			null,
 			null);
@@ -100,13 +139,14 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 			return null;
 		}
 
-		item = new Item(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
+		item = new Item(id,
+				cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
 				cursor.getString(cursor.getColumnIndex(COLUMN_DESCRIPTION)));
 
 		return item;
 	}
 
-	public void set(int position, Item item) {
+	public void put(Item item) {
 
 		SQLiteDatabase db;
 		ContentValues values;
@@ -118,17 +158,17 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		}
 
 		values = new ContentValues();
-		values.put(COLUMN_ID, position);
+		values.put(COLUMN_ID, item.getId());
 		values.put(COLUMN_NAME, item.getName());
 		values.put(COLUMN_DESCRIPTION, item.getDescription());
 
-		if (get(position) != null) {
+		if (get(item.getId()) != null) {
 
 			// Update an existing Item
 			db.update(TABLE_ITEMS,
 				values,
 				SELECTION,
-				new String[] { "" + position });
+				new String[] { "" + item.getId() });
 		}
 		else {
 

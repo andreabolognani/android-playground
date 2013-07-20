@@ -79,14 +79,7 @@ public class MainActivity extends ListActivity {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		Item item;
-
-		item = dbHelper.get(position);
-
-		if (item != null) {
-
-			editItem(item, position);
-		}
+		editItem((int) id);
 	}
 
 	private void addItem() {
@@ -95,22 +88,15 @@ public class MainActivity extends ListActivity {
 
 		intent = new Intent(this, DetailsActivity.class);
 
-		intent.putExtra(DetailsFragment.PARAMETER_NAME, "");
-		intent.putExtra(DetailsFragment.PARAMETER_DESCRIPTION, "");
-		intent.putExtra(DetailsFragment.PARAMETER_POSITION, adapter.getCount());
-
 		startActivity(intent);
 	}
 
-	private void editItem(Item item, int position) {
+	private void editItem(int id) {
 
 		Intent intent;
 
 		intent = new Intent(this, DetailsActivity.class);
-
-		intent.putExtra(DetailsFragment.PARAMETER_NAME, item.getName());
-		intent.putExtra(DetailsFragment.PARAMETER_DESCRIPTION, item.getDescription());
-		intent.putExtra(DetailsFragment.PARAMETER_POSITION, position);
+		intent.putExtra(DetailsFragment.PARAMETER_ID, id);
 
 		startActivity(intent);
 	}

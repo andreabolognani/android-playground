@@ -9,26 +9,30 @@ import android.widget.EditText;
 
 public class DetailsFragment extends Fragment {
 
-	public static final String PARAMETER_NAME = "org.kiyuko.playground.DetailsFragment.PARAMETER_NAME";
-	public static final String PARAMETER_DESCRIPTION = "org.kiyuko.playground.DetailsFragment.PARAMETER_DESCRIPTION";
-	public static final String PARAMETER_POSITION = "org.kiyuko.playground.DetailsFragment.PARAMETER_POSITION";
+	public static final String PARAMETER_ID = "org.kiyuko.playground.DetailsFragment.PARAMETER_ID";
 
-	private String name;
-	private String description;
-	private int position;
+	private ItemDatabaseHelper dbHelper;
+	private int id;
 
 	private EditText nameEdit;
 	private EditText descriptionEdit;
 
-	public static DetailsFragment newInstance(String name, String description, int position) {
+	public static DetailsFragment newInstance() {
 
 		DetailsFragment fragment;
 
 		fragment = new DetailsFragment();
+		fragment.id = -1;
 
-		fragment.name = name;
-		fragment.description = description;
-		fragment.position = position;
+		return fragment;
+	}
+
+	public static DetailsFragment newInstance(int id) {
+
+		DetailsFragment fragment;
+
+		fragment = new DetailsFragment();
+		fragment.id = id;
 
 		return fragment;
 	}
@@ -37,20 +41,37 @@ public class DetailsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view;
+		Item item;
 
 		view = inflater.inflate(R.layout.fragment_details, container, false);
 		nameEdit = (EditText) view.findViewById(R.id.nameEdit);
 		descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
 
+		dbHelper = new ItemDatabaseHelper(getActivity());
+
 		if (savedInstanceState != null) {
 
-			name = savedInstanceState.getString(PARAMETER_NAME);
-			description = savedInstanceState.getString(PARAMETER_DESCRIPTION);
-			position = savedInstanceState.getInt(PARAMETER_POSITION);
+			// Restarted due to orientation change: the view status is restored
+			// automatically, we just need to retrieve the item id
+			id = savedInstanceState.getInt(PARAMETER_ID);
 		}
+		else {
 
-		nameEdit.setText(name);
-		descriptionEdit.setText(description);
+			if (id >= 0) {
+
+				// Existing item: retrieve it from the database
+				item = dbHelper.get(id);
+			}
+			else {
+
+				// New item: ask the database for a new id
+				id = dbHelper.newId();
+				item = new Item(id, "", "");
+			}
+
+			nameEdit.setText(item.getName());
+			descriptionEdit.setText(item.getDescription());
+		}
 
 		return view;
 	}
@@ -58,15 +79,15 @@ public class DetailsFragment extends Fragment {
 	@Override
 	public void onPause() {
 
-		ItemDatabaseHelper dbHelper;
 		Item item;
 
 		// Retrieve data from the form
-		name = nameEdit.getText().toString();
-		description = descriptionEdit.getText().toString();
+		item = new Item(id,
+				nameEdit.getText().toString(),
+				descriptionEdit.getText().toString());
 
 		// Ignore changes if either of the fields is empty
-		if (name.length() <= 0 || description.length() <= 0) {
+		if (item.getName().length() <= 0 || item.getDescription().length() <= 0) {
 
 			super.onPause();
 
@@ -74,20 +95,25 @@ public class DetailsFragment extends Fragment {
 		}
 
 		// Store the modified item
-		dbHelper = new ItemDatabaseHelper(getActivity());
-		item = new Item(name, description);
-
-		dbHelper.set(position, item);
+		dbHelper.put(item);
+		dbHelper.close();
 
 		super.onPause();
 	}
 
 	@Override
+	public void onDestroy() {
+
+		dbHelper.close();
+
+		super.onDestroy();
+	}
+
+	@Override
 	public void onSaveInstanceState(Bundle outState) {
 
-		outState.putString(PARAMETER_NAME, name);
-		outState.putString(PARAMETER_DESCRIPTION, description);
-		outState.putInt(PARAMETER_POSITION, position);
+		// Save the item id
+		outState.putInt(PARAMETER_ID, id);
 
 		super.onSaveInstanceState(outState);
 	}

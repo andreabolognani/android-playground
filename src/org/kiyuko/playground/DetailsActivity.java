@@ -27,9 +27,17 @@ public class DetailsActivity extends Activity {
 			intent = getIntent();
 			extras = intent.getExtras();
 
-			detailsFragment = DetailsFragment.newInstance(extras.getString(DetailsFragment.PARAMETER_NAME),
-					extras.getString(DetailsFragment.PARAMETER_DESCRIPTION),
-					extras.getInt(DetailsFragment.PARAMETER_POSITION));
+			if (extras != null && extras.containsKey(DetailsFragment.PARAMETER_ID)) {
+
+				// Existing item: pass the id to the fragment
+				detailsFragment = DetailsFragment.newInstance(extras.getInt(DetailsFragment.PARAMETER_ID));
+			}
+			else {
+
+				// New item
+				detailsFragment = DetailsFragment.newInstance();
+			}
+
 
 			// Show the fragment
 			getFragmentManager().beginTransaction()
