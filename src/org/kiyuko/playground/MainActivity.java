@@ -1,7 +1,6 @@
 package org.kiyuko.playground;
 
 import android.os.Bundle;
-import android.app.DialogFragment;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -12,10 +11,9 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-public class MainActivity extends ListActivity implements ItemDetailsDialogFragment.Listener {
+public class MainActivity extends ListActivity {
 
 	private ItemDatabaseHelper dbHelper;
-	private ListView listView;
 	private SimpleCursorAdapter adapter;
 
 	@SuppressWarnings("deprecation")
@@ -26,8 +24,6 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
-		listView = getListView();
 
 		dbHelper = new ItemDatabaseHelper(this);
 		cursor = dbHelper.getAllItemsCursor();
@@ -91,23 +87,6 @@ public class MainActivity extends ListActivity implements ItemDetailsDialogFragm
 
 			editItem(item, position);
 		}
-	}
-
-	@Override
-	public void onPositiveClick(DialogFragment fragment, Item item, int position) {
-
-		dbHelper.set(position, item);
-		adapter.changeCursor(dbHelper.getAllItemsCursor());
-
-		// Scroll the ListView to the appropriate position
-		if (position < listView.getFirstVisiblePosition() || position > listView.getLastVisiblePosition()) {
-			listView.setSelection(position);
-		}
-	}
-
-	@Override
-	public void onNegativeClick(DialogFragment fragment) {
-		// Do nothing
 	}
 
 	private void addItem() {
