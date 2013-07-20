@@ -151,6 +151,10 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		SQLiteDatabase db;
 		ContentValues values;
 
+		if (item == null) {
+			return;
+		}
+
 		db = getWritableDatabase();
 
 		if (db == null) {
@@ -177,5 +181,24 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 				null,
 				values);
 		}
+	}
+
+	public void remove(Item item) {
+
+		SQLiteDatabase db;
+
+		if (item == null) {
+			return;
+		}
+
+		db = getWritableDatabase();
+
+		if (db == null) {
+			return;
+		}
+
+		db.delete(TABLE_ITEMS,
+				SELECTION,
+				new String[] { "" + item.getId() });
 	}
 }
