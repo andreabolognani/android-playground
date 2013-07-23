@@ -16,27 +16,35 @@ public class MainActivity extends ListActivity {
 	private ItemDatabaseHelper dbHelper;
 	private SimpleCursorAdapter adapter;
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-
-		Cursor cursor;
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
 		dbHelper = new ItemDatabaseHelper(this);
+
+		adapter = new SimpleCursorAdapter(this,
+				R.layout.item,
+				null,
+				new String[] {"name", "description"},
+				new int[] {R.id.nameView, R.id.descriptionView});
+		setListAdapter(adapter);
+	}
+
+	@Override
+	protected void onResume() {
+
+		Cursor cursor;
+
 		cursor = dbHelper.getAllItemsCursor();
 
 		if (cursor != null) {
 
-			adapter = new SimpleCursorAdapter(this,
-					R.layout.item,
-					cursor,
-					new String[] {"name", "description"},
-					new int[] {R.id.nameView, R.id.descriptionView});
-			setListAdapter(adapter);
+			adapter.changeCursor(cursor);
 		}
+
+		super.onResume();
 	}
 
 	@Override
