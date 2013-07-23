@@ -3,6 +3,7 @@ package org.kiyuko.playground;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 public class DetailsActivity extends Activity {
 
@@ -43,6 +44,28 @@ public class DetailsActivity extends Activity {
 			getFragmentManager().beginTransaction()
 				.add(R.id.fragment_container, detailsFragment)
 			.commit();
+		}
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+
+		Intent intent;
+
+		switch(item.getItemId()) {
+
+			case android.R.id.home:
+
+				intent = new Intent(this, MainActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+				startActivity(intent);
+
+				return true;
+
+			default:
+
+				return super.onOptionsItemSelected(item);
 		}
 	}
 }
