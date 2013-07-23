@@ -1,17 +1,14 @@
 package org.kiyuko.playground;
 
 import android.os.Bundle;
-import android.app.ListActivity;
+import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
-public class MainActivity extends ListActivity {
+public class MainActivity extends Activity {
 
 	private ItemDatabaseHelper dbHelper;
 	private SimpleCursorAdapter adapter;
@@ -22,37 +19,16 @@ public class MainActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		dbHelper = new ItemDatabaseHelper(this);
+		if (findViewById(R.id.fragment_container) != null) {
 
-		adapter = new SimpleCursorAdapter(this,
-				R.layout.item,
-				null,
-				new String[] {"name", "description"},
-				new int[] {R.id.nameView, R.id.descriptionView});
-		setListAdapter(adapter);
-	}
+			if (savedInstanceState != null) {
+				return;
+			}
 
-	@Override
-	protected void onResume() {
-
-		Cursor cursor;
-
-		cursor = dbHelper.getAllItemsCursor();
-
-		if (cursor != null) {
-
-			adapter.changeCursor(cursor);
+			getFragmentManager().beginTransaction()
+				.add(R.id.fragment_container, MainFragment.newInstance())
+			.commit();
 		}
-
-		super.onResume();
-	}
-
-	@Override
-	protected void onDestroy() {
-
-		dbHelper.close();
-
-		super.onDestroy();
 	}
 
 	@Override
@@ -65,11 +41,18 @@ public class MainActivity extends ListActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
+		MainFragment fragment;
+
 		switch (menuItem.getItemId()) {
 
 			case R.id.action_add:
 
-				addItem();
+				fragment = (MainFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
+
+				if (fragment != null) {
+
+					fragment.addItem();
+				}
 
 				return true;
 
@@ -82,31 +65,6 @@ public class MainActivity extends ListActivity {
 			default:
 				return super.onOptionsItemSelected(menuItem);
 		}
-	}
-
-	@Override
-	public void onListItemClick(ListView listView, View view, int position, long id) {
-
-		editItem(id);
-	}
-
-	private void addItem() {
-
-		Intent intent;
-
-		intent = new Intent(this, DetailsActivity.class);
-
-		startActivity(intent);
-	}
-
-	private void editItem(long id) {
-
-		Intent intent;
-
-		intent = new Intent(this, DetailsActivity.class);
-		intent.putExtra(DetailsFragment.PARAMETER_ID, id);
-
-		startActivity(intent);
 	}
 
 	private void notImplemented() {
