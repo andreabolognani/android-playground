@@ -42,11 +42,11 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		// Do nothing
 	}
 
-	public int newId() {
+	public long newId() {
 
 		SQLiteDatabase db;
 		Cursor cursor;
-		int id;
+		long id;
 
 		db = getReadableDatabase();
 
@@ -76,7 +76,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 			return 0;
 		}
 
-		id = cursor.getInt(cursor.getColumnIndex(COLUMN_ID));
+		id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
 		id += 1;
 
 		return id;
@@ -104,7 +104,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		return cursor;
 	}
 
-	public Item get(int id) {
+	public Item get(long id) {
 
 		SQLiteDatabase db;
 		Cursor cursor;

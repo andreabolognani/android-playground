@@ -87,7 +87,7 @@ public class MainActivity extends ListActivity {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		editItem((int) id);
+		editItem(id);
 	}
 
 	private void addItem() {
@@ -99,7 +99,7 @@ public class MainActivity extends ListActivity {
 		startActivity(intent);
 	}
 
-	private void editItem(int id) {
+	private void editItem(long id) {
 
 		Intent intent;
 

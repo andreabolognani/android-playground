@@ -31,7 +31,7 @@ public class DetailsActivity extends Activity {
 			if (extras != null && extras.containsKey(DetailsFragment.PARAMETER_ID)) {
 
 				// Existing item: pass the id to the fragment
-				detailsFragment = DetailsFragment.newInstance(extras.getInt(DetailsFragment.PARAMETER_ID));
+				detailsFragment = DetailsFragment.newInstance(extras.getLong(DetailsFragment.PARAMETER_ID));
 			}
 			else {
 

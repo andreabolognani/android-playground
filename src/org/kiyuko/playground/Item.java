@@ -2,9 +2,9 @@ package org.kiyuko.playground;
 
 public class Item {
 
-	public static final int INVALID_ID = -1;
+	public static final long INVALID_ID = -1;
 
-	private int id;
+	private long id;
 	private String name;
 	private String description;
 
@@ -15,14 +15,14 @@ public class Item {
 		this.description = "";
 	}
 
-	public Item(int id, String name, String description) {
+	public Item(long id, String name, String description) {
 
 		this.id = id;
 		this.name = name;
 		this.description = description;
 	}
 
-	public int getId() {
+	public long getId() {
 
 		return id;
 	}

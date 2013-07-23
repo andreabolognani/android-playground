@@ -12,7 +12,7 @@ public class DetailsFragment extends Fragment {
 	public static final String PARAMETER_ID = "org.kiyuko.playground.DetailsFragment.PARAMETER_ID";
 
 	private ItemDatabaseHelper dbHelper;
-	private int id;
+	private long id;
 
 	private EditText nameEdit;
 	private EditText descriptionEdit;
@@ -27,7 +27,7 @@ public class DetailsFragment extends Fragment {
 		return fragment;
 	}
 
-	public static DetailsFragment newInstance(int id) {
+	public static DetailsFragment newInstance(long id) {
 
 		DetailsFragment fragment;
 
@@ -53,7 +53,7 @@ public class DetailsFragment extends Fragment {
 
 			// Restarted due to orientation change: the view status is restored
 			// automatically, we just need to retrieve the item id
-			id = savedInstanceState.getInt(PARAMETER_ID);
+			id = savedInstanceState.getLong(PARAMETER_ID);
 		}
 		else {
 
@@ -113,7 +113,7 @@ public class DetailsFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 
 		// Save the item id
-		outState.putInt(PARAMETER_ID, id);
+		outState.putLong(PARAMETER_ID, id);
 
 		super.onSaveInstanceState(outState);
 	}
