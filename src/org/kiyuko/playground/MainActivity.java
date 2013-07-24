@@ -75,13 +75,13 @@ public class MainActivity extends Activity {
 
 	public void showDetailsFor(long id) {
 
-		ViewDetailsFragment fragment;
+		// Running in two-panes mode
+		if (findViewById(R.id.details_container) != null) {
 
-		fragment = (ViewDetailsFragment) getFragmentManager().findFragmentById(R.id.details_container);
-
-		if (fragment != null) {
-
-			fragment.showDetailsFor(id);
+			// Replace the current details fragment with a new one
+			getFragmentManager().beginTransaction()
+				.replace(R.id.details_container, ViewDetailsFragment.newInstance(id))
+			.commit();
 		}
 	}
 

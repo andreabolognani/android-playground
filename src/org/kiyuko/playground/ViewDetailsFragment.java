@@ -41,6 +41,7 @@ public class ViewDetailsFragment extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 		View view;
+		Item item;
 
 		view = inflater.inflate(R.layout.fragment_view_details, container, false);
 		nameView = (TextView) view.findViewById(R.id.nameView);
@@ -57,7 +58,13 @@ public class ViewDetailsFragment extends Fragment {
 		else {
 
 			// Show details for selected item
-			showDetailsFor(id);
+			item = dbHelper.get(id);
+
+			if (item != null) {
+
+				nameView.setText(item.getName());
+				descriptionView.setText(item.getDescription());
+			}
 		}
 
 		return view;
@@ -78,18 +85,5 @@ public class ViewDetailsFragment extends Fragment {
 		outState.putLong(PARAMETER_ID, id);
 
 		super.onSaveInstanceState(outState);
-	}
-
-	public void showDetailsFor(long id) {
-
-		Item item;
-
-		item = dbHelper.get(id);
-
-		if (item != null) {
-
-			nameView.setText(item.getName());
-			descriptionView.setText(item.getDescription());
-		}
 	}
 }
