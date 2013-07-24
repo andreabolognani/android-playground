@@ -6,13 +6,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class ItemListActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_item_list);
 
 		if (findViewById(R.id.fragment_container) != null) {
 
@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
 			}
 
 			getFragmentManager().beginTransaction()
-				.add(R.id.fragment_container, MainFragment.newInstance())
+				.add(R.id.fragment_container, ItemListFragment.newInstance())
 			.commit();
 		}
 	}
@@ -36,13 +36,13 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-		MainFragment fragment;
+		ItemListFragment fragment;
 
 		switch (menuItem.getItemId()) {
 
 			case R.id.action_add:
 
-				fragment = (MainFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
+				fragment = (ItemListFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
 
 				if (fragment != null) {
 

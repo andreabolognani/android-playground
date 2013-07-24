@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-public class DetailsFragment extends Fragment {
+public class ItemDetailsFragment extends Fragment {
 
 	public static final String PARAMETER_ID = "org.kiyuko.playground.DetailsFragment.PARAMETER_ID";
 
@@ -17,21 +17,21 @@ public class DetailsFragment extends Fragment {
 	private EditText nameEdit;
 	private EditText descriptionEdit;
 
-	public static DetailsFragment newInstance() {
+	public static ItemDetailsFragment newInstance() {
 
-		DetailsFragment fragment;
+		ItemDetailsFragment fragment;
 
-		fragment = new DetailsFragment();
+		fragment = new ItemDetailsFragment();
 		fragment.id = Item.INVALID_ID;
 
 		return fragment;
 	}
 
-	public static DetailsFragment newInstance(long id) {
+	public static ItemDetailsFragment newInstance(long id) {
 
-		DetailsFragment fragment;
+		ItemDetailsFragment fragment;
 
-		fragment = new DetailsFragment();
+		fragment = new ItemDetailsFragment();
 		fragment.id = id;
 
 		return fragment;
@@ -43,7 +43,7 @@ public class DetailsFragment extends Fragment {
 		View view;
 		Item item;
 
-		view = inflater.inflate(R.layout.fragment_details, container, false);
+		view = inflater.inflate(R.layout.fragment_item_details, container, false);
 		nameEdit = (EditText) view.findViewById(R.id.nameEdit);
 		descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
 

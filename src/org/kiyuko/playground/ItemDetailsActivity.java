@@ -5,17 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class DetailsActivity extends Activity {
+public class ItemDetailsActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		DetailsFragment detailsFragment;
+		ItemDetailsFragment detailsFragment;
 		Intent intent;
 		Bundle extras;
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_details);
+		setContentView(R.layout.activity_item_details);
 
 		if (findViewById(R.id.fragment_container) != null) {
 
@@ -28,15 +28,15 @@ public class DetailsActivity extends Activity {
 			intent = getIntent();
 			extras = intent.getExtras();
 
-			if (extras != null && extras.containsKey(DetailsFragment.PARAMETER_ID)) {
+			if (extras != null && extras.containsKey(ItemDetailsFragment.PARAMETER_ID)) {
 
 				// Existing item: pass the id to the fragment
-				detailsFragment = DetailsFragment.newInstance(extras.getLong(DetailsFragment.PARAMETER_ID));
+				detailsFragment = ItemDetailsFragment.newInstance(extras.getLong(ItemDetailsFragment.PARAMETER_ID));
 			}
 			else {
 
 				// New item
-				detailsFragment = DetailsFragment.newInstance();
+				detailsFragment = ItemDetailsFragment.newInstance();
 			}
 
 
@@ -56,7 +56,7 @@ public class DetailsActivity extends Activity {
 
 			case android.R.id.home:
 
-				intent = new Intent(this, MainActivity.class);
+				intent = new Intent(this, ItemListActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 				startActivity(intent);

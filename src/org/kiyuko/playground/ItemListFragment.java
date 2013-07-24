@@ -10,14 +10,14 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
-public class MainFragment extends ListFragment {
+public class ItemListFragment extends ListFragment {
 
 	private ItemDatabaseHelper dbHelper;
 	private SimpleCursorAdapter adapter;
 
-	public static MainFragment newInstance() {
+	public static ItemListFragment newInstance() {
 
-		return new MainFragment();
+		return new ItemListFragment();
 	}
 
 	@Override
@@ -26,7 +26,7 @@ public class MainFragment extends ListFragment {
 
 		View view;
 
-		view = inflater.inflate(R.layout.fragment_main, container, false);
+		view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
 		dbHelper = new ItemDatabaseHelper(getActivity());
 
@@ -73,7 +73,7 @@ public class MainFragment extends ListFragment {
 
 		Intent intent;
 
-		intent = new Intent(getActivity(), DetailsActivity.class);
+		intent = new Intent(getActivity(), ItemDetailsActivity.class);
 
 		startActivity(intent);
 	}
@@ -82,8 +82,8 @@ public class MainFragment extends ListFragment {
 
 		Intent intent;
 
-		intent = new Intent(getActivity(), DetailsActivity.class);
-		intent.putExtra(DetailsFragment.PARAMETER_ID, id);
+		intent = new Intent(getActivity(), ItemDetailsActivity.class);
+		intent.putExtra(ItemDetailsFragment.PARAMETER_ID, id);
 
 		startActivity(intent);
 	}
