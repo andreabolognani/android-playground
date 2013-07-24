@@ -6,22 +6,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class ItemListActivity extends Activity {
+public class MainActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_list);
+		setContentView(R.layout.activity_main);
 
-		if (findViewById(R.id.fragment_container) != null) {
+		if (findViewById(R.id.list_container) != null) {
 
 			if (savedInstanceState != null) {
 				return;
 			}
 
 			getFragmentManager().beginTransaction()
-				.add(R.id.fragment_container, ItemListFragment.newInstance())
+				.add(R.id.list_container, ItemListFragment.newInstance())
+			.commit();
+		}
+
+		if (findViewById(R.id.details_container) != null) {
+
+			if (savedInstanceState != null) {
+				return;
+			}
+
+			getFragmentManager().beginTransaction()
+				.add(R.id.details_container, ItemDetailsFragment.newInstance())
 			.commit();
 		}
 	}
@@ -42,7 +53,7 @@ public class ItemListActivity extends Activity {
 
 			case R.id.action_add:
 
-				fragment = (ItemListFragment) getFragmentManager().findFragmentById(R.id.fragment_container);
+				fragment = (ItemListFragment) getFragmentManager().findFragmentById(R.id.list_container);
 
 				if (fragment != null) {
 

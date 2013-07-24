@@ -73,7 +73,7 @@ public class ItemListFragment extends ListFragment {
 
 		Intent intent;
 
-		intent = new Intent(getActivity(), ItemDetailsActivity.class);
+		intent = new Intent(getActivity(), DetailsActivity.class);
 
 		startActivity(intent);
 	}
@@ -82,7 +82,7 @@ public class ItemListFragment extends ListFragment {
 
 		Intent intent;
 
-		intent = new Intent(getActivity(), ItemDetailsActivity.class);
+		intent = new Intent(getActivity(), DetailsActivity.class);
 		intent.putExtra(ItemDetailsFragment.PARAMETER_ID, id);
 
 		startActivity(intent);

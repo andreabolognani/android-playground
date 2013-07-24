@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-public class ItemDetailsActivity extends Activity {
+public class DetailsActivity extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -15,9 +15,9 @@ public class ItemDetailsActivity extends Activity {
 		Bundle extras;
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_item_details);
+		setContentView(R.layout.activity_details);
 
-		if (findViewById(R.id.fragment_container) != null) {
+		if (findViewById(R.id.details_container) != null) {
 
 			// Only add the fragment the first time the activity is created
 			if (savedInstanceState != null) {
@@ -42,7 +42,7 @@ public class ItemDetailsActivity extends Activity {
 
 			// Show the fragment
 			getFragmentManager().beginTransaction()
-				.add(R.id.fragment_container, detailsFragment)
+				.add(R.id.details_container, detailsFragment)
 			.commit();
 		}
 	}
@@ -56,7 +56,7 @@ public class ItemDetailsActivity extends Activity {
 
 			case android.R.id.home:
 
-				intent = new Intent(this, ItemListActivity.class);
+				intent = new Intent(this, MainActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
 				startActivity(intent);
