@@ -2,16 +2,11 @@ package org.kiyuko.playground;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-
-	private ItemDatabaseHelper dbHelper;
-	private SimpleCursorAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
