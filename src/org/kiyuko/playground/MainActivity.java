@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
 			}
 
 			getFragmentManager().beginTransaction()
-				.add(R.id.details_container, ItemDetailsFragment.newInstance())
+				.add(R.id.details_container, ViewDetailsFragment.newInstance(1))
 			.commit();
 		}
 	}
