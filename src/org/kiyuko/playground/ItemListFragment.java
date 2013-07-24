@@ -66,7 +66,8 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		editItem(id);
+		((MainActivity) getActivity()).showDetailsFor(id);
+		//editItem(id);
 	}
 
 	public void addItem() {

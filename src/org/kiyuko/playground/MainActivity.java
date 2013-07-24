@@ -73,6 +73,18 @@ public class MainActivity extends Activity {
 		}
 	}
 
+	public void showDetailsFor(long id) {
+
+		ViewDetailsFragment fragment;
+
+		fragment = (ViewDetailsFragment) getFragmentManager().findFragmentById(R.id.details_container);
+
+		if (fragment != null) {
+
+			fragment.showDetailsFor(id);
+		}
+	}
+
 	private void notImplemented() {
 
 		Toast toast;
