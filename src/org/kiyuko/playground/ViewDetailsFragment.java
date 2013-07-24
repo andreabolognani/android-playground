@@ -43,6 +43,12 @@ public class ViewDetailsFragment extends Fragment {
 		View view;
 		Item item;
 
+		if (id == Item.INVALID_ID) {
+
+			// Just display a message
+			return inflater.inflate(R.layout.no_item_selected, container, false);
+		}
+
 		view = inflater.inflate(R.layout.fragment_view_details, container, false);
 		nameView = (TextView) view.findViewById(R.id.nameView);
 		descriptionView = (TextView) view.findViewById(R.id.descriptionView);
@@ -73,7 +79,10 @@ public class ViewDetailsFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 
-		dbHelper.close();
+		if (dbHelper != null) {
+
+			dbHelper.close();
+		}
 
 		super.onDestroy();
 	}
