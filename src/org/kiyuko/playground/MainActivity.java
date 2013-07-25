@@ -18,23 +18,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		if (findViewById(R.id.list_container) != null) {
 
-			if (savedInstanceState != null) {
-				return;
-			}
-
 			getFragmentManager().beginTransaction()
-				.add(R.id.list_container, ItemListFragment.newInstance())
+				.replace(R.id.list_container, ItemListFragment.newInstance())
 			.commit();
 		}
 
 		if (findViewById(R.id.details_container) != null) {
 
-			if (savedInstanceState != null) {
-				return;
-			}
-
 			getFragmentManager().beginTransaction()
-				.add(R.id.details_container, ViewDetailsFragment.newInstance())
+				.replace(R.id.details_container, ViewDetailsFragment.newInstance())
 			.commit();
 		}
 	}
