@@ -1,7 +1,5 @@
 package org.kiyuko.playground;
 
-import java.util.ListIterator;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
