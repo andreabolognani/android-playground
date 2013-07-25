@@ -7,14 +7,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
 public class ItemListFragment extends ListFragment {
-
-	public interface OnItemClickListener {
-		public void onItemClick(long id);
-	}
 
 	private ItemDatabaseHelper dbHelper;
 	private SimpleCursorAdapter adapter;
@@ -70,7 +67,7 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		((OnItemClickListener) getActivity()).onItemClick(id);
+		((AdapterView.OnItemClickListener) getActivity()).onItemClick(listView, view, position, id);
 		//editItem(id);
 	}
 

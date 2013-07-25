@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity implements ItemListFragment.OnItemClickListener {
+public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +77,7 @@ public class MainActivity extends Activity implements ItemListFragment.OnItemCli
 		}
 	}
 
-	public void onItemClick(long id) {
+	public void onItemClick(AdapterView parent, View view, int position, long id) {
 
 		// Running in two-panes mode
 		if (findViewById(R.id.details_container) != null) {
