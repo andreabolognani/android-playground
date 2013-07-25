@@ -10,11 +10,21 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
+	private static final String PARAMETER_SELECTION_ID = "org.kiyuko.playground.MainActivity.PARAMETER_SELECTION_ID";
+
+	private long selectionId = Item.INVALID_ID;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		if (savedInstanceState != null) {
+
+			// Restore previous selection id
+			selectionId = savedInstanceState.getLong(PARAMETER_SELECTION_ID);
+		}
 
 		if (findViewById(R.id.list_container) != null) {
 
@@ -25,10 +35,29 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		if (findViewById(R.id.details_container) != null) {
 
-			getFragmentManager().beginTransaction()
-				.replace(R.id.details_container, ViewDetailsFragment.newInstance())
-			.commit();
+			if (selectionId == Item.INVALID_ID) {
+
+				// No previous selection
+				getFragmentManager().beginTransaction()
+					.replace(R.id.details_container, ViewDetailsFragment.newInstance())
+				.commit();
+			}
+			else {
+
+				// Restore previous selection
+				getFragmentManager().beginTransaction()
+					.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
+				.commit();
+			}
 		}
+	}
+
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+
+		outState.putLong(PARAMETER_SELECTION_ID, selectionId);
+
+		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -69,12 +98,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	public void onItemClick(AdapterView parent, View view, int position, long id) {
 
+		selectionId = id;
+
 		// Running in two-panes mode
 		if (findViewById(R.id.details_container) != null) {
 
 			// Replace the current details fragment with a new one
 			getFragmentManager().beginTransaction()
-				.replace(R.id.details_container, ViewDetailsFragment.newInstance(id))
+				.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
 			.commit();
 		}
 	}
