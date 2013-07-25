@@ -12,6 +12,10 @@ import android.widget.SimpleCursorAdapter;
 
 public class ItemListFragment extends ListFragment {
 
+	public interface OnItemClickListener {
+		public void onItemClick(long id);
+	}
+
 	private ItemDatabaseHelper dbHelper;
 	private SimpleCursorAdapter adapter;
 
@@ -66,7 +70,7 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		((MainActivity) getActivity()).showDetailsFor(id);
+		((OnItemClickListener) getActivity()).onItemClick(id);
 		//editItem(id);
 	}
 

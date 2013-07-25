@@ -1,12 +1,14 @@
 package org.kiyuko.playground;
 
+import java.util.ListIterator;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements ItemListFragment.OnItemClickListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +75,7 @@ public class MainActivity extends Activity {
 		}
 	}
 
-	public void showDetailsFor(long id) {
+	public void onItemClick(long id) {
 
 		// Running in two-panes mode
 		if (findViewById(R.id.details_container) != null) {
