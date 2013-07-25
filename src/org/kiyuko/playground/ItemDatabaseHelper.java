@@ -42,7 +42,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		// Do nothing
 	}
 
-	public long newId() {
+	public long getLowestId() {
 
 		SQLiteDatabase db;
 		Cursor cursor;
@@ -62,12 +62,37 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 			null,
 			COLUMN_ID);
 
-		if (cursor.getCount() <= 0) {
+		if (!cursor.moveToFirst()) {
 
 			cursor.close();
 
 			return 0;
 		}
+
+		id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
+
+		return id;
+	}
+
+	public long getHighestId() {
+
+		SQLiteDatabase db;
+		Cursor cursor;
+		long id;
+
+		db = getReadableDatabase();
+
+		if (db == null) {
+			return Item.INVALID_ID;
+		}
+
+		cursor = db.query(TABLE_ITEMS,
+			new String[] { COLUMN_ID },
+			"_id > " + Item.INVALID_ID,
+			null,
+			null,
+			null,
+			COLUMN_ID);
 
 		if (!cursor.moveToLast()) {
 
@@ -77,9 +102,13 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		}
 
 		id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
-		id += 1;
 
 		return id;
+	}
+
+	public long newId() {
+
+		return getHighestId() + 1;
 	}
 
 	public Cursor getAllItemsCursor() {
