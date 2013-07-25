@@ -1,5 +1,6 @@
 package org.kiyuko.playground;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,6 +12,7 @@ public class ItemDetailsFragment extends Fragment {
 
 	public static final String PARAMETER_ID = "org.kiyuko.playground.DetailsFragment.PARAMETER_ID";
 
+	private Activity activity;
 	private ItemDatabaseHelper dbHelper;
 	private long id;
 
@@ -43,11 +45,13 @@ public class ItemDetailsFragment extends Fragment {
 		View view;
 		Item item;
 
+		activity = getActivity();
+
 		view = inflater.inflate(R.layout.fragment_item_details, container, false);
 		nameEdit = (EditText) view.findViewById(R.id.nameEdit);
 		descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
 
-		dbHelper = new ItemDatabaseHelper(getActivity());
+		dbHelper = new ItemDatabaseHelper(activity);
 
 		if (savedInstanceState != null) {
 

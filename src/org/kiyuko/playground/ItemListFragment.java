@@ -1,5 +1,6 @@
 package org.kiyuko.playground;
 
+import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Intent;
 import android.database.Cursor;
@@ -13,6 +14,7 @@ import android.widget.SimpleCursorAdapter;
 
 public class ItemListFragment extends ListFragment {
 
+	private Activity activity;
 	private ItemDatabaseHelper dbHelper;
 	private SimpleCursorAdapter adapter;
 
@@ -27,11 +29,13 @@ public class ItemListFragment extends ListFragment {
 
 		View view;
 
+		activity = getActivity();
+
 		view = inflater.inflate(R.layout.fragment_item_list, container, false);
 
-		dbHelper = new ItemDatabaseHelper(getActivity());
+		dbHelper = new ItemDatabaseHelper(activity);
 
-		adapter = new SimpleCursorAdapter(getActivity(),
+		adapter = new SimpleCursorAdapter(activity,
 				R.layout.item,
 				null,
 				new String[] {"name", "description"},
@@ -75,7 +79,7 @@ public class ItemListFragment extends ListFragment {
 
 		Intent intent;
 
-		intent = new Intent(getActivity(), DetailsActivity.class);
+		intent = new Intent(activity, DetailsActivity.class);
 
 		startActivity(intent);
 	}
@@ -84,7 +88,7 @@ public class ItemListFragment extends ListFragment {
 
 		Intent intent;
 
-		intent = new Intent(getActivity(), DetailsActivity.class);
+		intent = new Intent(activity, DetailsActivity.class);
 		intent.putExtra(ItemDetailsFragment.PARAMETER_ID, id);
 
 		startActivity(intent);
