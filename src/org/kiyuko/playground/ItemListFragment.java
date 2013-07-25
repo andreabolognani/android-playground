@@ -38,8 +38,8 @@ public class ItemListFragment extends ListFragment {
 		adapter = new SimpleCursorAdapter(activity,
 				R.layout.item,
 				null,
-				new String[] {"name", "description"},
-				new int[] {R.id.nameView, R.id.descriptionView});
+				new String[] { "name" },
+				new int[] { R.id.nameView });
 		setListAdapter(adapter);
 
 		return view;
