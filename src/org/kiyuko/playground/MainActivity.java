@@ -89,8 +89,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
+
 		getMenuInflater().inflate(R.menu.main, menu);
+
+		if (findViewById(R.id.details_container) != null) {
+
+			// Showing details: make remove action visible
+			menu.findItem(R.id.action_remove).setVisible(true);
+		}
+
 		return true;
 	}
 

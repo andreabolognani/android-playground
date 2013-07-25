@@ -1,16 +1,24 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
 
-	<item
-		android:id="@+id/action_add"
-		android:orderInCategory="90"
-		android:showAsAction="ifRoom"
-		android:title="@string/action_add"
-		android:icon="@drawable/ic_content_new"/>
+    <item
+        android:id="@+id/action_add"
+        android:orderInCategory="90"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_add"
+        android:icon="@drawable/ic_content_new"/>
 
-	<item
-		android:id="@+id/action_settings"
-		android:orderInCategory="100"
-		android:showAsAction="never"
-		android:title="@string/action_settings"/>
+    <item
+        android:id="@+id/action_remove"
+        android:showAsAction="ifRoom"
+        android:orderInCategory="91"
+        android:title="@string/action_remove"
+        android:icon="@drawable/ic_content_discard"
+        android:visible="false"/>
+
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/action_settings"/>
 
 </menu>
