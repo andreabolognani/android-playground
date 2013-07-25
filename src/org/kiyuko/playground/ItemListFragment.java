@@ -75,15 +75,6 @@ public class ItemListFragment extends ListFragment {
 		//editItem(id);
 	}
 
-	public void addItem() {
-
-		Intent intent;
-
-		intent = new Intent(activity, DetailsActivity.class);
-
-		startActivity(intent);
-	}
-
 	private void editItem(long id) {
 
 		Intent intent;

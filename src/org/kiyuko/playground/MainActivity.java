@@ -2,6 +2,7 @@ package org.kiyuko.playground;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,19 +13,48 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	private static final String PARAMETER_SELECTION_ID = "org.kiyuko.playground.MainActivity.PARAMETER_SELECTION_ID";
 
+	private ItemDatabaseHelper dbHelper;
 	private long selectionId = Item.INVALID_ID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+
+		dbHelper = new ItemDatabaseHelper(this);
 
 		if (savedInstanceState != null) {
 
 			// Restore previous selection id
 			selectionId = savedInstanceState.getLong(PARAMETER_SELECTION_ID);
 		}
+	}
+
+	@Override
+	protected void onStart() {
+
+		long lowestId;
+		long highestId;
+
+		super.onStart();
+
+		lowestId = dbHelper.getLowestId();
+		highestId = dbHelper.getHighestId();
+
+		if (highestId == 0) {
+
+			// Show a message if no item has been created
+			setContentView(R.layout.no_items);
+			return;
+		}
+
+		if (selectionId == Item.INVALID_ID) {
+
+			// No previous selection, pick the first one
+			selectionId = lowestId;
+		}
+
+		setContentView(R.layout.activity_main);
 
 		if (findViewById(R.id.list_container) != null) {
 
@@ -35,21 +65,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		if (findViewById(R.id.details_container) != null) {
 
-			if (selectionId == Item.INVALID_ID) {
-
-				// No previous selection
-				getFragmentManager().beginTransaction()
-					.replace(R.id.details_container, ViewDetailsFragment.newInstance())
-				.commit();
-			}
-			else {
-
-				// Restore previous selection
-				getFragmentManager().beginTransaction()
-					.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
-				.commit();
-			}
+			getFragmentManager().beginTransaction()
+				.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
+			.commit();
 		}
+	}
+
+	@Override
+	protected void onDestroy() {
+
+		dbHelper.close();
+
+		super.onDestroy();
 	}
 
 	@Override
@@ -70,18 +97,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	@Override
 	public boolean onOptionsItemSelected(MenuItem menuItem) {
 
-		ItemListFragment fragment;
-
 		switch (menuItem.getItemId()) {
 
 			case R.id.action_add:
 
-				fragment = (ItemListFragment) getFragmentManager().findFragmentById(R.id.list_container);
-
-				if (fragment != null) {
-
-					fragment.addItem();
-				}
+				addItem();
 
 				return true;
 
@@ -108,6 +128,15 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 				.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
 			.commit();
 		}
+	}
+
+	private void addItem() {
+
+		Intent intent;
+
+		intent = new Intent(this, DetailsActivity.class);
+
+		startActivity(intent);
 	}
 
 	private void notImplemented() {
