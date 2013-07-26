@@ -15,6 +15,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	private ItemDatabaseHelper dbHelper;
 	private long selectionId = Item.INVALID_ID;
+	private boolean dualPane;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +44,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		if (highestId == 0) {
 
+			dualPane = false;
+
 			// Show a message if no item has been created
 			setContentView(R.layout.no_items);
+
 			return;
 		}
 
@@ -64,6 +68,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		}
 
 		if (findViewById(R.id.details_container) != null) {
+
+			dualPane = true;
 
 			getFragmentManager().beginTransaction()
 				.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
@@ -92,7 +98,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		getMenuInflater().inflate(R.menu.main, menu);
 
-		if (findViewById(R.id.details_container) != null) {
+		if (dualPane) {
 
 			// Showing details: make remove action visible
 			menu.findItem(R.id.action_remove).setVisible(true);
@@ -128,7 +134,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		selectionId = id;
 
 		// Running in two-panes mode
-		if (findViewById(R.id.details_container) != null) {
+		if (dualPane) {
 
 			// Replace the current details fragment with a new one
 			getFragmentManager().beginTransaction()
