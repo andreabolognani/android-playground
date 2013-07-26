@@ -43,7 +43,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 			return;
 		}
 
-		id = getSharedPreferences("prefs", MODE_PRIVATE).getLong(Common.KEY_ID, Item.INVALID_ID);
+		id = getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE).getLong(Common.KEY_ID, Item.INVALID_ID);
 
 		if (id == Item.INVALID_ID) {
 
@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	@Override
 	protected void onPause() {
 
-		getSharedPreferences("prefs", MODE_PRIVATE).edit()
+		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE).edit()
 			.putLong(Common.KEY_ID, id)
 		.commit();
 
