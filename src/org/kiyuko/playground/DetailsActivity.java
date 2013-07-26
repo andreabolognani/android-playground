@@ -28,10 +28,10 @@ public class DetailsActivity extends Activity {
 			intent = getIntent();
 			extras = intent.getExtras();
 
-			if (extras != null && extras.containsKey(ItemDetailsFragment.PARAMETER_ID)) {
+			if (extras != null && extras.containsKey(Common.KEY_ID)) {
 
 				// Existing item: pass the id to the fragment
-				detailsFragment = ItemDetailsFragment.newInstance(extras.getLong(ItemDetailsFragment.PARAMETER_ID));
+				detailsFragment = ItemDetailsFragment.newInstance(extras.getLong(Common.KEY_ID));
 			}
 			else {
 

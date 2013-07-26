@@ -7,14 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Toast;
 
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
-	private static final String PARAMETER_SELECTION_ID = "org.kiyuko.playground.MainActivity.PARAMETER_SELECTION_ID";
-
 	private ItemDatabaseHelper dbHelper;
-	private long selectionId = Item.INVALID_ID;
+	private long id = Item.INVALID_ID;
 	private boolean dualPane;
 
 	@Override
@@ -46,12 +43,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 			return;
 		}
 
-		selectionId = getSharedPreferences("prefs", MODE_PRIVATE).getLong(PARAMETER_SELECTION_ID, Item.INVALID_ID);
+		id = getSharedPreferences("prefs", MODE_PRIVATE).getLong(Common.KEY_ID, Item.INVALID_ID);
 
-		if (selectionId == Item.INVALID_ID) {
+		if (id == Item.INVALID_ID) {
 
 			// No previous selection, pick the first one
-			selectionId = lowestId;
+			id = lowestId;
 		}
 
 		setContentView(R.layout.activity_main);
@@ -68,7 +65,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 			dualPane = true;
 
 			getFragmentManager().beginTransaction()
-				.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
+				.replace(R.id.details_container, ViewDetailsFragment.newInstance(id))
 			.commit();
 		}
 	}
@@ -77,7 +74,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	protected void onPause() {
 
 		getSharedPreferences("prefs", MODE_PRIVATE).edit()
-			.putLong(PARAMETER_SELECTION_ID, selectionId)
+			.putLong(Common.KEY_ID, id)
 		.commit();
 
 		super.onPause();
@@ -124,7 +121,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 			case R.id.action_settings:
 
-				notImplemented();
+				Common.notImplemented(this);
 
 				return true;
 
@@ -135,14 +132,14 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	public void onItemClick(AdapterView parent, View view, int position, long id) {
 
-		selectionId = id;
+		this.id = id;
 
 		// Running in two-panes mode
 		if (dualPane) {
 
 			// Replace the current details fragment with a new one
 			getFragmentManager().beginTransaction()
-				.replace(R.id.details_container, ViewDetailsFragment.newInstance(selectionId))
+				.replace(R.id.details_container, ViewDetailsFragment.newInstance(id))
 			.commit();
 		}
 	}
@@ -158,21 +155,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	private void removeItem() {
 
-		dbHelper.remove(selectionId);
+		dbHelper.remove(id);
 
 		onResume();
 
 		invalidateOptionsMenu();
-	}
-
-	private void notImplemented() {
-
-		Toast toast;
-		int duration;
-
-		duration = Toast.LENGTH_SHORT;
-
-		toast = Toast.makeText(getApplicationContext(), R.string.notImplemented, duration);
-		toast.show();
 	}
 }

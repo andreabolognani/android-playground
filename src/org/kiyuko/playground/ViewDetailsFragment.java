@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 public class ViewDetailsFragment extends Fragment {
 
-	public static final String PARAMETER_ID = "org.kiyuko.playground.DetailsFragment.PARAMETER_ID";
-
 	private Activity activity;
 	private ItemDatabaseHelper dbHelper;
 	private long id;
@@ -63,7 +61,7 @@ public class ViewDetailsFragment extends Fragment {
 
 			// Restarted due to orientation change: the view status is restored
 			// automatically, we just need to retrieve the item id
-			id = savedInstanceState.getLong(PARAMETER_ID);
+			id = savedInstanceState.getLong(Common.KEY_ID);
 		}
 		else {
 
@@ -95,7 +93,7 @@ public class ViewDetailsFragment extends Fragment {
 	public void onSaveInstanceState(Bundle outState) {
 
 		// Save the item id
-		outState.putLong(PARAMETER_ID, id);
+		outState.putLong(Common.KEY_ID, id);
 
 		super.onSaveInstanceState(outState);
 	}
