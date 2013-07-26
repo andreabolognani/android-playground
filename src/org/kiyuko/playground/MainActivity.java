@@ -22,22 +22,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		super.onCreate(savedInstanceState);
 
+		android.util.Log.d(getClass().getName(), "onCreate() called");
+
 		dbHelper = new ItemDatabaseHelper(this);
-
-		if (savedInstanceState != null) {
-
-			// Restore previous selection id
-			selectionId = savedInstanceState.getLong(PARAMETER_SELECTION_ID);
-		}
 	}
 
 	@Override
-	protected void onStart() {
+	protected void onResume() {
 
 		long lowestId;
 		long highestId;
 
-		super.onStart();
+		super.onResume();
 
 		lowestId = dbHelper.getLowestId();
 		highestId = dbHelper.getHighestId();
@@ -51,6 +47,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 			return;
 		}
+
+		selectionId = getSharedPreferences("prefs", MODE_PRIVATE).getLong(PARAMETER_SELECTION_ID, Item.INVALID_ID);
 
 		if (selectionId == Item.INVALID_ID) {
 
@@ -78,19 +76,21 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	}
 
 	@Override
+	protected void onPause() {
+
+		getSharedPreferences("prefs", MODE_PRIVATE).edit()
+			.putLong(PARAMETER_SELECTION_ID, selectionId)
+		.commit();
+
+		super.onPause();
+	}
+
+	@Override
 	protected void onDestroy() {
 
 		dbHelper.close();
 
 		super.onDestroy();
-	}
-
-	@Override
-	protected void onSaveInstanceState(Bundle outState) {
-
-		outState.putLong(PARAMETER_SELECTION_ID, selectionId);
-
-		super.onSaveInstanceState(outState);
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		dbHelper.remove(selectionId);
 
-		onStart();
+		onResume();
 	}
 
 	private void notImplemented() {
