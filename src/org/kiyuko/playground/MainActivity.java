@@ -163,6 +163,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		dbHelper.remove(selectionId);
 
 		onResume();
+
+		invalidateOptionsMenu();
 	}
 
 	private void notImplemented() {
