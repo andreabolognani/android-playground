@@ -71,7 +71,9 @@ public class ItemListFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView listView, View view, int position, long id) {
 
-		((AdapterView.OnItemClickListener) getActivity()).onItemClick(listView, view, position, id);
+		setHighlightedItem(position);
+
+		((AdapterView.OnItemClickListener) activity).onItemClick(listView, view, position, id);
 		//editItem(id);
 	}
 
@@ -83,5 +85,29 @@ public class ItemListFragment extends ListFragment {
 		intent.putExtra(ItemDetailsFragment.PARAMETER_ID, id);
 
 		startActivity(intent);
+	}
+
+	private void setHighlightedItem(int position) {
+
+		ListView listView;
+		View view;
+		int count;
+		int normalColor;
+		int highlightColor;
+
+		listView = getListView();
+		count = listView.getCount();
+
+		normalColor = getResources().getColor(android.R.color.black);
+		highlightColor = getResources().getColor(android.R.color.holo_blue_dark);
+
+		for (int i = 0; i < count; ++i) {
+
+			view = listView.getChildAt(i);
+			view.setBackgroundColor(normalColor);
+		}
+
+		view = listView.getChildAt(position);
+		view.setBackgroundColor(highlightColor);
 	}
 }

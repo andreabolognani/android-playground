@@ -22,8 +22,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		super.onCreate(savedInstanceState);
 
-		android.util.Log.d(getClass().getName(), "onCreate() called");
-
 		dbHelper = new ItemDatabaseHelper(this);
 	}
 
