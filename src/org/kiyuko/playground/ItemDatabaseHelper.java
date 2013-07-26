@@ -212,13 +212,9 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 		}
 	}
 
-	public void remove(Item item) {
+	public void remove(long id) {
 
 		SQLiteDatabase db;
-
-		if (item == null) {
-			return;
-		}
 
 		db = getWritableDatabase();
 
@@ -228,6 +224,6 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
 		db.delete(TABLE_ITEMS,
 				SELECTION,
-				new String[] { "" + item.getId() });
+				new String[] { "" + id });
 	}
 }

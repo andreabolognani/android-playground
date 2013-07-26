@@ -118,6 +118,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 				return true;
 
+			case R.id.action_remove:
+
+				removeItem();
+
+				return true;
+
 			case R.id.action_settings:
 
 				notImplemented();
@@ -150,6 +156,13 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		intent = new Intent(this, DetailsActivity.class);
 
 		startActivity(intent);
+	}
+
+	private void removeItem() {
+
+		dbHelper.remove(selectionId);
+
+		onStart();
 	}
 
 	private void notImplemented() {
