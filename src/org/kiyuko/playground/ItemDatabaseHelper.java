@@ -66,7 +66,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
 			cursor.close();
 
-			return 0;
+			return Item.INVALID_ID;
 		}
 
 		id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
@@ -98,7 +98,7 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 
 			cursor.close();
 
-			return 0;
+			return Item.INVALID_ID;
 		}
 
 		id = cursor.getLong(cursor.getColumnIndex(COLUMN_ID));
@@ -109,6 +109,11 @@ public class ItemDatabaseHelper extends SQLiteOpenHelper {
 	public long newId() {
 
 		return getHighestId() + 1;
+	}
+
+	public boolean isEmpty() {
+
+		return getHighestId() == Item.INVALID_ID;
 	}
 
 	public Cursor getAllItemsCursor() {

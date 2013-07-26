@@ -11,33 +11,16 @@ import android.widget.AdapterView;
 public class MainActivity extends Activity implements AdapterView.OnItemClickListener {
 
 	private ItemDatabaseHelper dbHelper;
-	private long id = Item.INVALID_ID;
+	private long id;
 	private boolean dualPane;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	public void update() {
 
-		super.onCreate(savedInstanceState);
+		dualPane = false;
 
-		dbHelper = new ItemDatabaseHelper(this);
-	}
+		if (dbHelper.isEmpty()) {
 
-	@Override
-	protected void onResume() {
-
-		long lowestId;
-		long highestId;
-
-		super.onResume();
-
-		lowestId = dbHelper.getLowestId();
-		highestId = dbHelper.getHighestId();
-
-		if (highestId == 0) {
-
-			dualPane = false;
-
-			// Show a message if no item has been created
+			// Show a message if no item has been created yet
 			setContentView(R.layout.no_items);
 
 			return;
@@ -47,8 +30,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		if (id == Item.INVALID_ID) {
 
-			// No previous selection, pick the first one
-			id = lowestId;
+			// No previous selection, pick the first item
+			id = dbHelper.getLowestId();
 		}
 
 		setContentView(R.layout.activity_main);
@@ -71,6 +54,22 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	}
 
 	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+
+		super.onCreate(savedInstanceState);
+
+		dbHelper = new ItemDatabaseHelper(this);
+	}
+
+	@Override
+	protected void onResume() {
+
+		super.onResume();
+
+		update();
+	}
+
+	@Override
 	protected void onPause() {
 
 		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE).edit()
@@ -90,6 +89,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
+
+		super.onCreateOptionsMenu(menu);
 
 		getMenuInflater().inflate(R.menu.main, menu);
 
@@ -157,7 +158,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		dbHelper.remove(id);
 
-		onResume();
+		update();
 
 		invalidateOptionsMenu();
 	}

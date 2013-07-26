@@ -98,7 +98,6 @@ public class ItemDetailsFragment extends Fragment {
 
 		// Store the modified item
 		dbHelper.put(item);
-		dbHelper.close();
 
 		super.onPause();
 	}

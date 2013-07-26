@@ -43,12 +43,6 @@ public class ViewDetailsFragment extends Fragment {
 		View view;
 		Item item;
 
-		if (id == Item.INVALID_ID) {
-
-			// Just display a message
-			return inflater.inflate(R.layout.no_items, container, false);
-		}
-
 		activity = getActivity();
 
 		view = inflater.inflate(R.layout.fragment_view_details, container, false);
