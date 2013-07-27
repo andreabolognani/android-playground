@@ -158,6 +158,11 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		dbHelper.remove(id);
 
+		id = Item.INVALID_ID;
+		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE).edit()
+			.putLong(Common.KEY_ID, id)
+		.commit();
+
 		update();
 
 		invalidateOptionsMenu();
