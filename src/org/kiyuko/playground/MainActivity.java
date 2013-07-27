@@ -23,6 +23,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 			// Show a message if no item has been created yet
 			setContentView(R.layout.no_items);
 
+			// Rebuild menu
+			invalidateOptionsMenu();
+
 			return;
 		}
 
@@ -51,6 +54,9 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 				.replace(R.id.details_container, ViewDetailsFragment.newInstance(id))
 			.commit();
 		}
+
+		// Rebuild menu
+		invalidateOptionsMenu();
 	}
 
 	@Override
@@ -90,17 +96,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 
-		super.onCreateOptionsMenu(menu);
-
 		getMenuInflater().inflate(R.menu.main, menu);
 
-		if (dualPane) {
+		// Show the remove action only in dual-pane mode
+		menu.findItem(R.id.action_remove).setVisible(dualPane);
 
-			// Showing details: make remove action visible
-			menu.findItem(R.id.action_remove).setVisible(true);
-		}
-
-		return true;
+		return super.onCreateOptionsMenu(menu);
 	}
 
 	@Override
@@ -164,7 +165,5 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		.commit();
 
 		update();
-
-		invalidateOptionsMenu();
 	}
 }
