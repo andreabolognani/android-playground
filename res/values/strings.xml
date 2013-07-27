@@ -10,6 +10,7 @@
 	<string name="newItem">New item</string>
 	<string name="addItem">Add item</string>
 	<string name="editItem">Edit item</string>
+	<string name="changesDiscarded">Changes discarded</string>
 	<string name="notImplemented">Not implemented</string>
 	<string name="nameEditHint">Name</string>
 	<string name="descriptionEditHint">Description</string>

@@ -72,6 +72,8 @@ public class EditDetailsFragment extends Fragment {
 				.putLong(Common.KEY_ID, Item.INVALID_ID)
 			.commit();
 
+			Common.shortToast(activity, R.string.changesDiscarded);
+
 			super.onPause();
 
 			return;
