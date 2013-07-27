@@ -17,26 +17,6 @@ public class EditDetailsFragment extends Fragment {
 	private EditText nameEdit;
 	private EditText descriptionEdit;
 
-	public static EditDetailsFragment newInstance() {
-
-		EditDetailsFragment fragment;
-
-		fragment = new EditDetailsFragment();
-		fragment.id = Item.INVALID_ID;
-
-		return fragment;
-	}
-
-	public static EditDetailsFragment newInstance(long id) {
-
-		EditDetailsFragment fragment;
-
-		fragment = new EditDetailsFragment();
-		fragment.id = id;
-
-		return fragment;
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -51,29 +31,25 @@ public class EditDetailsFragment extends Fragment {
 
 		dbHelper = new ItemDatabaseHelper(activity);
 
-		if (savedInstanceState != null) {
+		id = activity.getSharedPreferences(Common.SHARED_PREFERENCES_FILE, Activity.MODE_PRIVATE)
+			.getLong(Common.KEY_ID, Item.INVALID_ID);
 
-			// Restarted due to orientation change: the view status is restored
-			// automatically, we just need to retrieve the item id
-			id = savedInstanceState.getLong(Common.KEY_ID);
+		item = null;
+
+		if (id != Item.INVALID_ID) {
+
+			// Existing item: retrieve it from the database
+			item = dbHelper.get(id);
 		}
-		else {
 
-			if (id == Item.INVALID_ID) {
+		if (item == null) {
 
-				// New item: ask the database for a new id
-				id = dbHelper.newId();
-				item = new Item(id, "", "");
-			}
-			else {
-
-				// Existing item: retrieve it from the database
-				item = dbHelper.get(id);
-			}
-
-			nameEdit.setText(item.getName());
-			descriptionEdit.setText(item.getDescription());
+			// New item: start from an empty one
+			item = new Item(id, getString(R.string.newItem), "");
 		}
+
+		nameEdit.setText(item.getName());
+		descriptionEdit.setText(item.getDescription());
 
 		return view;
 	}
@@ -88,8 +64,13 @@ public class EditDetailsFragment extends Fragment {
 				nameEdit.getText().toString(),
 				descriptionEdit.getText().toString());
 
-		// Ignore changes if either of the fields is empty
 		if (item.getName().length() <= 0 || item.getDescription().length() <= 0) {
+
+			// Ignore changes if either of the fields is empty
+			activity.getSharedPreferences(Common.SHARED_PREFERENCES_FILE, Activity.MODE_PRIVATE)
+			.edit()
+				.putLong(Common.KEY_ID, Item.INVALID_ID)
+			.commit();
 
 			super.onPause();
 
@@ -108,14 +89,5 @@ public class EditDetailsFragment extends Fragment {
 		dbHelper.close();
 
 		super.onDestroy();
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-
-		// Save the item id
-		outState.putLong(Common.KEY_ID, id);
-
-		super.onSaveInstanceState(outState);
 	}
 }

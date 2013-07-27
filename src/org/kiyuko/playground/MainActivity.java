@@ -162,6 +162,12 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		Intent intent;
 
+		id = dbHelper.newId();
+		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE)
+		.edit()
+			.putLong(Common.KEY_ID, id)
+		.commit();
+
 		intent = new Intent(this, DetailsActivity.class);
 
 		startActivity(intent);

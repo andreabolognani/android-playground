@@ -10,41 +10,12 @@ public class DetailsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		EditDetailsFragment detailsFragment;
-		Intent intent;
-		Bundle extras;
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_details);
 
-		if (findViewById(R.id.details_container) != null) {
-
-			// Only add the fragment the first time the activity is created
-			if (savedInstanceState != null) {
-				return;
-			}
-
-			// Get the intent that has started this activity
-			intent = getIntent();
-			extras = intent.getExtras();
-
-			if (extras != null && extras.containsKey(Common.KEY_ID)) {
-
-				// Existing item: pass the id to the fragment
-				detailsFragment = EditDetailsFragment.newInstance(extras.getLong(Common.KEY_ID));
-			}
-			else {
-
-				// New item
-				detailsFragment = EditDetailsFragment.newInstance();
-			}
-
-
-			// Show the fragment
-			getFragmentManager().beginTransaction()
-				.add(R.id.details_container, detailsFragment)
-			.commit();
-		}
+		getFragmentManager().beginTransaction()
+			.replace(R.id.details_container, new EditDetailsFragment())
+		.commit();
 	}
 
 	@Override
