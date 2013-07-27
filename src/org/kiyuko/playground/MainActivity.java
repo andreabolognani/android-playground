@@ -130,7 +130,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 			case R.id.action_settings:
 
-				Common.notImplemented(this);
+				Common.shortToast(this, R.string.notImplemented);
 
 				return true;
 

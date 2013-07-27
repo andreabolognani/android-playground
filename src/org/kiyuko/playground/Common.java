@@ -9,14 +9,14 @@ public class Common {
 
 	public static final String SHARED_PREFERENCES_FILE = "preferences";
 
-	public static void notImplemented(Context context) {
+	public static void shortToast(Context context, int message) {
 
 		Toast toast;
 		int duration;
 
 		duration = Toast.LENGTH_SHORT;
 
-		toast = Toast.makeText(context, R.string.notImplemented, duration);
+		toast = Toast.makeText(context, message, duration);
 		toast.show();
 	}
 }
