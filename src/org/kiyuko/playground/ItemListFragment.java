@@ -18,11 +18,6 @@ public class ItemListFragment extends ListFragment {
 	private ItemDatabaseHelper dbHelper;
 	private SimpleCursorAdapter adapter;
 
-	public static ItemListFragment newInstance() {
-
-		return new ItemListFragment();
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {

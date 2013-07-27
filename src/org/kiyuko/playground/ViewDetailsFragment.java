@@ -17,26 +17,6 @@ public class ViewDetailsFragment extends Fragment {
 	private TextView nameView;
 	private TextView descriptionView;
 
-	public static ViewDetailsFragment newInstance() {
-
-		ViewDetailsFragment fragment;
-
-		fragment = new ViewDetailsFragment();
-		fragment.id = Item.INVALID_ID;
-
-		return fragment;
-	}
-
-	public static ViewDetailsFragment newInstance(long id) {
-
-		ViewDetailsFragment fragment;
-
-		fragment = new ViewDetailsFragment();
-		fragment.id = id;
-
-		return fragment;
-	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -51,22 +31,16 @@ public class ViewDetailsFragment extends Fragment {
 
 		dbHelper = new ItemDatabaseHelper(activity);
 
-		if (savedInstanceState != null) {
+		id = activity.getSharedPreferences(Common.SHARED_PREFERENCES_FILE, Activity.MODE_PRIVATE)
+			.getLong(Common.KEY_ID, Item.INVALID_ID);
 
-			// Restarted due to orientation change: the view status is restored
-			// automatically, we just need to retrieve the item id
-			id = savedInstanceState.getLong(Common.KEY_ID);
-		}
-		else {
+		// Show details for selected item
+		item = dbHelper.get(id);
 
-			// Show details for selected item
-			item = dbHelper.get(id);
+		if (item != null) {
 
-			if (item != null) {
-
-				nameView.setText(item.getName());
-				descriptionView.setText(item.getDescription());
-			}
+			nameView.setText(item.getName());
+			descriptionView.setText(item.getDescription());
 		}
 
 		return view;
@@ -75,20 +49,8 @@ public class ViewDetailsFragment extends Fragment {
 	@Override
 	public void onDestroy() {
 
-		if (dbHelper != null) {
-
-			dbHelper.close();
-		}
+		dbHelper.close();
 
 		super.onDestroy();
-	}
-
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-
-		// Save the item id
-		outState.putLong(Common.KEY_ID, id);
-
-		super.onSaveInstanceState(outState);
 	}
 }

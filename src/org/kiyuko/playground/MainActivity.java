@@ -29,12 +29,18 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 			return;
 		}
 
-		id = getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE).getLong(Common.KEY_ID, Item.INVALID_ID);
+		id = getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE)
+				.getLong(Common.KEY_ID, Item.INVALID_ID);
 
 		if (id == Item.INVALID_ID) {
 
 			// No previous selection, pick the first item
 			id = dbHelper.getLowestId();
+
+			getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE)
+			.edit()
+				.putLong(Common.KEY_ID, id)
+			.commit();
 		}
 
 		setContentView(R.layout.activity_main);
@@ -42,7 +48,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		if (findViewById(R.id.list_container) != null) {
 
 			getFragmentManager().beginTransaction()
-				.replace(R.id.list_container, ItemListFragment.newInstance())
+				.replace(R.id.list_container, new ItemListFragment())
 			.commit();
 		}
 
@@ -51,7 +57,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 			dualPane = true;
 
 			getFragmentManager().beginTransaction()
-				.replace(R.id.details_container, ViewDetailsFragment.newInstance(id))
+				.replace(R.id.details_container, new ViewDetailsFragment())
 			.commit();
 		}
 
@@ -78,7 +84,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 	@Override
 	protected void onPause() {
 
-		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE).edit()
+		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE)
+		.edit()
 			.putLong(Common.KEY_ID, id)
 		.commit();
 
@@ -136,12 +143,17 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 		this.id = id;
 
+		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE)
+		.edit()
+			.putLong(Common.KEY_ID, id)
+		.commit();
+
 		// Running in two-panes mode
 		if (dualPane) {
 
 			// Replace the current details fragment with a new one
 			getFragmentManager().beginTransaction()
-				.replace(R.id.details_container, ViewDetailsFragment.newInstance(id))
+				.replace(R.id.details_container, new ViewDetailsFragment())
 			.commit();
 		}
 	}
@@ -160,7 +172,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 		dbHelper.remove(id);
 
 		id = Item.INVALID_ID;
-		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE).edit()
+		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE)
+		.edit()
 			.putLong(Common.KEY_ID, id)
 		.commit();
 
