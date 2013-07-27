@@ -10,7 +10,7 @@ public class DetailsActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
-		ItemDetailsFragment detailsFragment;
+		EditDetailsFragment detailsFragment;
 		Intent intent;
 		Bundle extras;
 
@@ -31,12 +31,12 @@ public class DetailsActivity extends Activity {
 			if (extras != null && extras.containsKey(Common.KEY_ID)) {
 
 				// Existing item: pass the id to the fragment
-				detailsFragment = ItemDetailsFragment.newInstance(extras.getLong(Common.KEY_ID));
+				detailsFragment = EditDetailsFragment.newInstance(extras.getLong(Common.KEY_ID));
 			}
 			else {
 
 				// New item
-				detailsFragment = ItemDetailsFragment.newInstance();
+				detailsFragment = EditDetailsFragment.newInstance();
 			}
 
 

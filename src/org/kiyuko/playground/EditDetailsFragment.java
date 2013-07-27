@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
-public class ItemDetailsFragment extends Fragment {
+public class EditDetailsFragment extends Fragment {
 
 	private Activity activity;
 	private ItemDatabaseHelper dbHelper;
@@ -17,21 +17,21 @@ public class ItemDetailsFragment extends Fragment {
 	private EditText nameEdit;
 	private EditText descriptionEdit;
 
-	public static ItemDetailsFragment newInstance() {
+	public static EditDetailsFragment newInstance() {
 
-		ItemDetailsFragment fragment;
+		EditDetailsFragment fragment;
 
-		fragment = new ItemDetailsFragment();
+		fragment = new EditDetailsFragment();
 		fragment.id = Item.INVALID_ID;
 
 		return fragment;
 	}
 
-	public static ItemDetailsFragment newInstance(long id) {
+	public static EditDetailsFragment newInstance(long id) {
 
-		ItemDetailsFragment fragment;
+		EditDetailsFragment fragment;
 
-		fragment = new ItemDetailsFragment();
+		fragment = new EditDetailsFragment();
 		fragment.id = id;
 
 		return fragment;
