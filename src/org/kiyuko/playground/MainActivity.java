@@ -141,6 +141,8 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 
 	public void onItemClick(AdapterView parent, View view, int position, long id) {
 
+		Intent intent;
+
 		this.id = id;
 
 		getSharedPreferences(Common.SHARED_PREFERENCES_FILE, MODE_PRIVATE)
@@ -148,13 +150,19 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
 			.putLong(Common.KEY_ID, id)
 		.commit();
 
-		// Running in two-panes mode
 		if (dualPane) {
 
-			// Replace the current details fragment with a new one
+			// Dual pane mode: replace the current details fragment with a new one
 			getFragmentManager().beginTransaction()
 				.replace(R.id.details_container, new ViewDetailsFragment())
 			.commit();
+		}
+		else {
+
+			// Single pane mode: start a new activity to show the details
+			intent = new Intent(this, ViewDetailsActivity.class);
+
+			startActivity(intent);
 		}
 	}
 
