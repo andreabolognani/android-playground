@@ -25,7 +25,7 @@ public class EditDetailsFragment extends Fragment {
 
 		activity = getActivity();
 
-		view = inflater.inflate(R.layout.fragment_item_details, container, false);
+		view = inflater.inflate(R.layout.fragment_edit_details, container, false);
 		nameEdit = (EditText) view.findViewById(R.id.nameEdit);
 		descriptionEdit = (EditText) view.findViewById(R.id.descriptionEdit);
 
