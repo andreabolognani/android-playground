@@ -6,15 +6,10 @@
 	<string name="action_remove">Remove item</string>
 	<string name="action_settings">Settings</string>
 	<string name="noItems">No items</string>
-	<string name="noItemSelected">No item selected</string>
 	<string name="newItem">New item</string>
-	<string name="addItem">Add item</string>
-	<string name="editItem">Edit item</string>
 	<string name="changesDiscarded">Changes discarded</string>
 	<string name="notImplemented">Not implemented</string>
 	<string name="nameEditHint">Name</string>
 	<string name="descriptionEditHint">Description</string>
-	<string name="ok">OK</string>
-	<string name="cancel">Cancel</string>
 
 </resources>
